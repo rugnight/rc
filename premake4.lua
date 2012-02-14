@@ -100,7 +100,7 @@ solution "RC_GAME"
    -- ===================================== --
    -- Project "rcMatn"                      --
    project "rcMath"
-      location "project/rcMath/build"  
+      --location "project/rcMath/build"  
       kind "StaticLib" -- WindowedApp or ColsoleApp or StaticLib
       language "C++"
       files { 

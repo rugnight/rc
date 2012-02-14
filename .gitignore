@@ -1,0 +1,9 @@
+# git無視ファイル集
+
+obj/
+debug/
+
+Makefile
+.DS_Store
+
+*.make
