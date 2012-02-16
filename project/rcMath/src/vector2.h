@@ -13,7 +13,8 @@ typedef f32 VECTOR2_TYPE;       // Vector2 の要素の型
 namespace rc {
 namespace math {
 
-class Vector2 {
+class Vector2
+{
     public:
         // -------------------------
         // constructor
