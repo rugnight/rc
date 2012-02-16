@@ -11,13 +11,25 @@
 namespace rc {
 namespace math {
 
+
 class Vector2 {
     public:
-        Vector2();
-        Vector2(f32 _n);
-        Vector2(f32 _x, f32 _y);
-        ~Vector2();
+        Vector2()
+        {
+            Vector2(0.0f, 0.0f);
+        }
+        Vector2(f32 _n)
+        {
+            Vector2(_n, _n);
+        }
+        Vector2(f32 _x, f32 _y)
+        : x(_x), y(_y)
+        {
+        }
 
+        ~Vector2()
+        {
+        }
 
     // 演算子オーバーロード
     public:
@@ -27,6 +39,13 @@ class Vector2 {
             this->x = rhs.x; this->y = rhs.y;
             return *this;
         }
+
+        // +
+        Vector2 operator+ (const Vector2& rhs)
+        {
+            return Vector2(this->x + rhs.x, this->y + rhs.y);
+        }
+
         // +Vector2
         Vector2 operator+()
         {
@@ -40,7 +59,13 @@ class Vector2 {
 
 
     public:
-        f32 x, y;
+        union { 
+            struct {
+                f32 x;
+                f32 y;
+            };
+            f32 v[2];
+        };
 };
 
 // ベクトル同士の和
