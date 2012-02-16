@@ -21,6 +21,15 @@ int main(int argc, char* argv[])
     Vector2 plus = vec2 + vec2; 
     printf("+ %f, %f \n", plus.v[0], plus.v[1]);
 
+    Vector2 minus = vec2 - vec2; 
+    printf("- %f, %f \n", minus.v[0], minus.v[1]);
+
+    Vector2 mul = vec2 * 5.0f; 
+    printf("* %f, %f \n", mul.v[0], mul.v[1]);
+
+    vec2 *= 5.0f;
+    printf("* %f, %f \n", mul.v[0], mul.v[1]);
+
     getchar();
     return 0; 
 }
