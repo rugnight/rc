@@ -6,9 +6,7 @@
 #ifndef _RC_VECTOR3_H_
 #define _RC_VECTOR3_H_
 
-#include "rcBase.h"
-
-typedef f32 VECTOR3_TYPE;
+#include "rcMath.h"
 
 namespace rc {
 namespace math {

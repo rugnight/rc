@@ -6,9 +6,7 @@
 #ifndef _RC_VECTOR2_H_
 #define _RC_VECTOR2_H_
 
-#include "rcBase.h"
-
-typedef f32 VECTOR2_TYPE;       // Vector2 の要素の型
+#include "rcMath.h"
 
 namespace rc {
 namespace math {
