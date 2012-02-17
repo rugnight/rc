@@ -24,6 +24,17 @@ static void print_vec3(const char* comment, const Vector3 &v)
 
 int main(int argc, char* argv[]) 
 {
+    f32 array3[3] = { 0.0f };
+    u32 size_array3 = sizeof(array3);
+
+    Vector3 vec3(0.0f);
+    u32 size_vec3 = sizeof(vec3);
+
+    printf("size array3 = %d\n", size_array3);
+    printf("size vec3   = %d\n", size_vec3);
+
+
+#if 0
     Vector3 vec3(0.0f, 0.0f, 0.0f);
     vec3.x = 1.0f;
     vec3.y = 2.0f;
@@ -39,6 +50,7 @@ int main(int argc, char* argv[])
     Vector3 cross;
     Vector3::cross(&cross, Vector3(0.0f, 0.0f, 1.0f), Vector3(1.0f, 0.0f, 0.0f));
     print_vec3("cross", cross);
+#endif
 
 
 #if 0
