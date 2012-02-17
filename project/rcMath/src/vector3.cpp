@@ -61,16 +61,17 @@ void Vector3::sub(Vector3 *dst, const Vector3 &src0, const Vector3 &src1)
 // ベクトル同士の内積
 void Vector3::dot(VECTOR3_TYPE *dst, const Vector3 &src0, const Vector3 &src1)
 {
-    *dst = src0.x * src1.x + src0.y * src1.y src0.z * src1.z;
+    *dst = src0.x * src1.x + src0.y * src1.y + src0.z * src1.z;
 }
 
 // ベクトル同士の外積
-void Vector3::cross(VECTOR3_TYPE *dst, const Vector3 &src0, const Vector3 &src1)
+void Vector3::cross(Vector3 *dst, const Vector3 &src0, const Vector3 &src1)
 {
-    // これは2次元の場合
-    dst->x = src0.y*src1.z-z1*src1.y;
-    dst->y = z1*x2-x1*src1.z;
-    dst->z = x1*src1.y-src0.y*x2;
+    // これは3次元の場合
+    float x = src0.y * src1.z - src0.z * src1.y;
+    float y = src0.z * src1.x - src0.x * src1.z;
+    float z = src0.x * src1.y - src0.y * src1.x;
+    dst->x = x; dst->y = y; dst->z = z;
 }
 
 // ベクトルの定数倍
@@ -81,5 +82,5 @@ void Vector3::scale(Vector3 *dst, const Vector3 &src0, const VECTOR3_TYPE &src1)
     dst->z = src0.z * src1;
 }
 
-} //math
-} //rc
+}; //math
+}; //rc

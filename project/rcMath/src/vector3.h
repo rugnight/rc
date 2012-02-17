@@ -88,7 +88,7 @@ class Vector3
         // ベクトル同士の内積
         static void dot(VECTOR3_TYPE *dst, const Vector3 &src0, const Vector3 &src1);
         // ベクトル同士の外積
-        static void cross(VECTOR3_TYPE *dst, const Vector3 &src0, const Vector3 &src1);
+        static void cross(Vector3 *dst, const Vector3 &src0, const Vector3 &src1);
 
         // ベクトルの定数倍
         static void scale(Vector3 *dst, const Vector3 &src0, const VECTOR3_TYPE &src1);
@@ -105,7 +105,7 @@ class Vector3
 };
 
 
-} //math
-} //rc
+}; //math
+}; //rc
 
 #endif//_RC_VECTOR3_H_
