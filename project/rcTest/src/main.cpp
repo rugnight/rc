@@ -5,14 +5,15 @@
  */
 
 #include <stdio.h> 
-#include "Vector3.h"
-#include "Vector2.h"
-
+#include "vector3.h"
+#include "vector2.h"
+#include "matrix4.h"
 
 #include <time.h>
 
 using rc::math::Vector2;
 using rc::math::Vector3;
+using rc::math::Matrix4;
 
 
 static void print_vec2(const char* comment, const Vector2 &v)
@@ -25,8 +26,53 @@ static void print_vec3(const char* comment, const Vector3 &v)
     printf("[%s] %f, %f %f\n", comment, v.x, v.y, v.z);
 }
 
+static void print_matrix4(const char* comment, const Matrix4 &m)
+{
+    printf("%s\n", comment);
+    for (u32 i = 0; i < 16; ++i )
+    {
+        if ( i != 0 && i % 4 == 0 ) printf("\n");
+        printf("%3.2f, ", m.v[i]);
+    }
+    printf("\n");
+}
+
 int main(int argc, char* argv[]) 
 {
+    f32 v_array[16];
+    Matrix4 mat(5.73013f);
+
+    s32 mat_size = sizeof(mat);
+    printf("mat size = %d \n", mat_size);
+    s32 v16_size = sizeof(v_array);
+    printf("v16 size = %d \n", v16_size);
+    print_matrix4("matrix", mat);
+
+
+    Matrix4 mat0 = Matrix4::ZERO;
+    Matrix4 mat1 = Matrix4::ZERO;
+    for ( u32 i = 0; i < 16; ++i ) {
+        mat0.v[i] = 0.0f + (f32)(0.0f + i);
+        mat1.v[i] = 10.0f + (f32)(0.0f + i);
+    }
+    print_matrix4("mat0", mat0);
+    print_matrix4("mat1", mat1);
+
+    Matrix4 mat_add = mat0 + mat1;
+    print_matrix4("mat_add", mat_add);
+
+    Matrix4 mat_sub = mat0 - mat1;
+    print_matrix4("mat_sub", mat_sub);
+
+    Matrix4 mat_mul = mat0 * mat1;
+    print_matrix4("mat_mul", mat_mul);
+
+    Matrix4 mat_inv;
+    Matrix4::inverse(&mat_inv, mat1);
+    mat_mul = mat_mul * mat_inv;
+    print_matrix4("mat_inv", mat_mul);
+
+#if 0
     u32 ALLOC_NUM = 10000;
     printf("alloc heap\n");
     clock_t start = clock();
@@ -46,6 +92,7 @@ int main(int argc, char* argv[])
     end   = clock();
     time = (f64)(end - start) / CLOCKS_PER_SEC;
     printf("heap time = %f\n", time);
+#endif
 
 
 #if 0
