@@ -13,6 +13,11 @@ namespace math {
 
 typedef f32 VECTOR2_TYPE;       // Vector2 の要素の型
 typedef f32 VECTOR3_TYPE;       // Vector3 の要素の型
+typedef f32 VECTOR4_TYPE;       // Vector4 の要素の型
+
+
+typedef f32 MATRIX4_TYPE;       // Matrix4の要素の型
+
 
 };
 };

@@ -8,6 +8,9 @@
 #include "Vector3.h"
 #include "Vector2.h"
 
+
+#include <time.h>
+
 using rc::math::Vector2;
 using rc::math::Vector3;
 
@@ -24,6 +27,28 @@ static void print_vec3(const char* comment, const Vector3 &v)
 
 int main(int argc, char* argv[]) 
 {
+    u32 ALLOC_NUM = 10000;
+    printf("alloc heap\n");
+    clock_t start = clock();
+    for ( u32 i = 0; i < ALLOC_NUM; ++i ) {
+        f32 v[16];
+    }
+    clock_t end   = clock();
+    f64 time = (f64)(end - start) / CLOCKS_PER_SEC;
+    printf("heap time = %f\n", time);
+
+    printf("alloc stack\n");
+    start = clock();
+    for ( u32 i = 0; i < ALLOC_NUM; ++i ) {
+        f32 *p = new f32[16];
+        SAFE_DELETE_ARRAY(p);
+    }
+    end   = clock();
+    time = (f64)(end - start) / CLOCKS_PER_SEC;
+    printf("heap time = %f\n", time);
+
+
+#if 0
     f32 array3[3] = { 0.0f };
     u32 size_array3 = sizeof(array3);
 
@@ -32,6 +57,7 @@ int main(int argc, char* argv[])
 
     printf("size array3 = %d\n", size_array3);
     printf("size vec3   = %d\n", size_vec3);
+#endif
 
 
 #if 0
