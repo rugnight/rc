@@ -80,6 +80,25 @@ public:
 private:
 };
 
+#if 0
+/* ----------------------------------------------- */
+class Texture
+/* ----------------------------------------------- */
+{
+public:
+    struct Desc {
+        u32 width, height, bit, pitch, buffer_size, format;
+    };
+public:
+    Texture();
+    virtual ~Texture();
+    
+    const Desc& get_desc() { return m_desc; }
+protected:
+    Desc m_desc;
+};
+#endif
+
 
 };
 
