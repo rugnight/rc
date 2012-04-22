@@ -40,6 +40,7 @@ bool GLTexture::load(const char* file_path)
 {
     this->destroy();
 
+#ifdef USE_SDL
     // 画像を読み込む
     SDL_Surface* surface1 = IMG_Load(file_path);
     if (!surface1) {
@@ -77,6 +78,7 @@ bool GLTexture::load(const char* file_path)
     // 後片付け
     SDL_FreeSurface(surface2);
     SDL_FreeSurface(surface1);
+#endif//USE_SDL
 
     return true;
 }
