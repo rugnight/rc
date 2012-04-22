@@ -9,11 +9,47 @@
 
 #include "rcGraphicBase.h"
 
-#include <string>
-#include <map>
-
 namespace rc {
 
+
+/* ----------------------------------------------- */
+class Texture
+/* ----------------------------------------------- */
+{
+    public:
+        struct Desc {
+            u32 width, height;
+            Desc() : width(), height() {}
+        };
+    public:
+        Texture()  {}
+        virtual ~Texture() {}
+
+        // テクスチャ情報取得
+        const Desc& get_desc() { return m_desc; }
+
+        // テクスチャリソース取得
+        // 各グラフィックデバイス毎に実装
+        virtual void* get_resource() = 0;
+
+    protected:
+        Desc    m_desc;
+};
+
+#ifdef RC_USE_OPENGL
+/* ----------------------------------------------- */
+class TextureOpenGL: public Texture
+/* ----------------------------------------------- */
+{
+public:
+    TextureOpenGL();
+    virtual ~TextureOpenGL();
+
+private:
+};
+#endif//RC_USE_OPENGL
+
+#if 0
 /* ----------------------------------------------- */
 class ITexture
 /* ----------------------------------------------- */
@@ -79,6 +115,7 @@ public:
     virtual ~Texture();
 private:
 };
+#endif
 
 
 };

@@ -6,7 +6,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <gl3.h>
+//#include <gl3.h>
 #include "pixel_shader.h"
 
 #include "util_file.h"

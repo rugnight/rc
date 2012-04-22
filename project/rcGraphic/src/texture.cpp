@@ -4,27 +4,25 @@
  *   date   2011/07/17
  */
 
-#include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
-
 #include "texture.h"
 #include "util_math.h"
 
 namespace rc {
 
-/*
- *  TextureBase 
- */
-TextureBase::TextureBase()
-: m_width(0)
-, m_height(0)
+#ifdef RC_USE_OPENGL
+/* ----------------------------------------------- */
+//  class TextureOpenGL: public Texture
+/* ----------------------------------------------- */
+TextureOpenGL::TextureOpenGL()
 {
 }
 
-TextureBase::~TextureBase()
+TextureOpenGL::~TextureOpenGL()
 {
 }
+#endif//RC_USE_OPENGL
 
+#if 0
 /*
  *  GLTexture
  */
@@ -101,16 +99,6 @@ void GLTexture::resetMember()
     m_height = 0;
     m_file_path = "";
 }
-
-/*
- * class Texture : public GLTexture
- */
-Texture::Texture()
-{
-}
-
-Texture::~Texture()
-{
-}
+#endif
 
 };

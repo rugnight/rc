@@ -6,10 +6,11 @@
 // Description : Hello World in C++, Ansi-style
 //============================================================================
 
-#include "./graphic_device.h"
+#include "graphic_device.h"
 
 namespace rc { 
 
+#if 0
 /* ---------------------------------------------------------------------- */
 //  class GLGraphicDevice
 /* ---------------------------------------------------------------------- */
@@ -64,5 +65,6 @@ void GLGraphicDevice::drawArrays(int draw_mode, int begin, int count)
 {
 	glDrawArrays(draw_mode, begin, count);
 }
+#endif
 
 }; // namespace rc

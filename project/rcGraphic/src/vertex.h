@@ -1,8 +1,6 @@
 //
 // Name        : vertex.h
 //
-//
-//
 
 #ifndef _RC_VERTEX_H_INCLUDED_
 #define _RC_VERTEX_H_INCLUDED_
@@ -10,7 +8,9 @@
 #include "rcGraphicBase.h"
 
 template<class Vertex>
+/* ------------------------------------------------ */
 class VertexBuffer
+/* ------------------------------------------------ */
 {
 	public:
 		VertexBuffer()

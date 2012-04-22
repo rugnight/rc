@@ -9,11 +9,40 @@
 #ifndef _RC_GRAPHIC_DEVICE_H_
 #define _RC_GRAPHIC_DEVICE_H_
 
+
+
 #include "rcGraphicBase.h"
+
+
+#if 0
 #include "texture.h"
+
 
 namespace rc { 
 
+/* ---------------------------------------------------------------------- */
+class GraphicDevice
+/* ---------------------------------------------------------------------- */
+{
+    public:
+        GraphicDevice();
+        virtual ~GraphicDevice();
+
+    private:
+};
+
+/* ---------------------------------------------------------------------- */
+class GraphicDeviceOpenGL : public GraphicDevice
+/* ---------------------------------------------------------------------- */
+{
+    public:
+        GraphicDeviceOpenGL();
+        virtual ~GraphicDeviceOpenGL();
+
+    private:
+};
+
+#if 0
 /* ---------------------------------------------------------------------- */
 class IDevice
 /* ---------------------------------------------------------------------- */
@@ -64,8 +93,10 @@ public:
 
 private:
 };
+#endif
 
 }; // namespace rc
 
+#endif
 
 #endif // _RC_GRAPHIC_DEVICE_H_
