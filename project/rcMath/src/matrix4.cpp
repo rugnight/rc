@@ -138,23 +138,24 @@ void Matrix4::mul(Matrix4 *dst, const Matrix4 &src0, const Matrix4 &src1)
 
 void Matrix4::inverse(Matrix4 *dst, const Matrix4 &src)
 {
+    Matrix4 tmp;
 #if 0
-    dst->v[0] = (src.m11 * src.m22 * src.m33) + 
-    dst->v[1] = 
-    dst->v[2] = 
-    dst->v[3] = 
-    dst->v[4] = 
-    dst->v[5] = 
-    dst->v[6] = 
-    dst->v[7] = 
-    dst->v[8] = 
-    dst->v[9] = 
-    dst->v[10] = 
-    dst->v[11] = 
-    dst->v[12] = 
-    dst->v[13] = 
-    dst->v[14] = 
-    dst->v[15] = 
+    tmp[0] = src[1][1]*(src[2][2]*src[3][3] - src[2][3]*src[3][2]) + src[1][2]*(src[2][3]*src[3][1] - src[2][1]*src[3][3]) + src[1][3]*(src[2][1]*src[3][2] - src[2][2]*src[3][1]);
+    tmp[1] = src[2][1]*(src[3][2]*src[0][3] - src[3][3]*src[0][2]) + src[2][2]*(src[3][3]*src[0][1] - src[3][1]*src[0][3]) + src[2][3]*(src[3][1]*src[0][2] - src[3][2]*src[0][1]);
+    tmp[2] = src[3][1]*(src[0][2]*src[1][3] - src[0][3]*src[1][2]) + src[3][2]*(src[0][3]*src[1][1] - src[0][1]*src[1][3]) + src[3][3]*(src[0][1]*src[1][2] - src[0][2]*src[1][1]);
+    tmp[3] = src[0][1]*(src[1][2]*src[2][3] - src[1][3]*src[2][2]) + src[0][2]*(src[1][3]*src[2][1] - src[1][1]*src[2][3]) + src[0][3]*(src[1][1]*src[2][2] - src[1][2]*src[2][1]);
+    tmp[4] = src[1][2]*(src[2][3]*src[3][0] - src[2][0]*src[3][3]) + src[1][3]*(src[2][0]*src[3][2] - src[2][2]*src[3][0]) + src[1][0]*(src[2][2]*src[3][3] - src[2][3]*src[3][2]);
+    tmp[5] = src[2][2]*(src[3][3]*src[0][0] - src[3][0]*src[0][3]) + src[2][3]*(src[3][0]*src[0][2] - src[3][2]*src[0][0]) + src[2][0]*(src[2][2]*src[3][3] - src[2][3]*src[3][2]);
+    tmp[6] = 
+    tmp[7] = 
+    tmp[8] = 
+    tmp[9] = 
+    tmp[10] = 
+    tmp[11] = 
+    tmp[12] = 
+    tmp[13] = 
+    tmp[14] = 
+    tmp[15] = 
 #endif
 }
 

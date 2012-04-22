@@ -6,7 +6,7 @@
 #ifndef _RC_MATH_H_
 #define _RC_MATH_H_
 
-#include "rcBase.h"
+#include "rc_base.h"
 
 namespace rc {
 namespace math {

@@ -70,7 +70,6 @@ solution "RC_GAME"
    -- Project "rcBase"                      --
    -- ===================================== --
 
-   --[[
    -- ===================================== --
    -- Project "rcGraphic"                   --
    project "rcGraphic"
@@ -82,20 +81,21 @@ solution "RC_GAME"
       }
 
       includedirs { -- -I/usr/include/openglに相当
+          "project/rcBase/src",
+          "project/rcMath/src",
           "/System/Library/Frameworks/OpenGL.framework/Headers/",
           --"/Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/GLUT.framework/Versions/A/Headers/",
-
-          "project/rcBase/src",
       }
       libdirs { -- -L/usr/lib/w32apiに相当
           "/System/Library/Frameworks/OpenGL.framework/Libraries/"
       }
       links { -- -lopengl32 -lglu32 -lglut32 に相当
+        "rcBase",
+        "rcMath",
           --"GL", "GLU", 
       }
    -- Project "rcGraphic"                   --
    -- ===================================== --
-   ]]
 
    -- ===================================== --
    -- Project "rcMatn"                      --
