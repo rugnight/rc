@@ -42,7 +42,7 @@ void GraphicDeviceOpenGL::set_projection_orthograhy(f32 width, f32 height, f32 z
 {
 }
 
-
+#include <stdio.h>
 // --------------------------------------------------
 // 描画
 // --------------------------------------------------
@@ -68,8 +68,10 @@ void GraphicDeviceOpenGL::draw(DRAW_MODE mode, u32 vertex_num, void *vertex_arra
     VERTEX_2D_COLOR *vtx = static_cast<VERTEX_2D_COLOR*>(vertex_array);
     for (unsigned i = 0; i < vertex_num; i++) 
     {
-        glColor4ub( vtx[i].r, vtx[i].g, vtx[i].b, vtx[i].a);
+        printf("%f, %f\n", vtx[i].x, vtx[i].y);
+        
         glVertex2f( vtx[i].x, vtx[i].y);
+        glColor4ub( vtx[i].r, vtx[i].g, vtx[i].b, vtx[i].a);    
     }
     glEnd();
 }
