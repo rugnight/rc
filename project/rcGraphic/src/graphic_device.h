@@ -34,7 +34,7 @@ class GraphicDevice
         // --------------------------------------------------
         // モデルビュー設定
         // --------------------------------------------------
-        //virtual void set_model_view(
+        virtual void set_transform_matrix(const Matrix4 &mat) = 0;
 
         // --------------------------------------------------
         // カメラの設定(Projection)
@@ -66,6 +66,7 @@ class GraphicDeviceOpenGL : public GraphicDevice
         // --------------------------------------------------
         // モデルビュー設定
         // --------------------------------------------------
+        virtual void set_transform_matrix(const Matrix4 &mat);
 
         // --------------------------------------------------
         // カメラの設定(Projection)

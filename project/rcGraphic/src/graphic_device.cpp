@@ -34,6 +34,10 @@ void GraphicDeviceOpenGL::set_vertex_type(VERTEX_TYPE type)
 // --------------------------------------------------
 // モデルビュー設定
 // --------------------------------------------------
+void GraphicDeviceOpenGL::set_transform_matrix(const Matrix4 &mat)
+{
+    glLoadMatrixf(mat.v);
+}
 
 // --------------------------------------------------
 // カメラの設定(Projection)
