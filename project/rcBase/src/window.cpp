@@ -132,7 +132,7 @@ void WindowGame::addEventListener(IWindowEventListener *p_evt)
 }
 
 /* ------------------------------- */
-};	// namespace base
-};	// namespace rc
+}	// namespace base
+}	// namespace rc
 /* ------------------------------- */
 #endif

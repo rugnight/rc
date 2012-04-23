@@ -103,4 +103,4 @@ void GLTexture::resetMember()
 }
 #endif
 
-};
+}

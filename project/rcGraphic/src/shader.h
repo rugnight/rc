@@ -60,7 +60,7 @@ class Shader : public GLShader
 };
 
 
-}; // namespace rc
+} // namespace rc
 
 #endif 
 

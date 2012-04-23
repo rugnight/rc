@@ -100,7 +100,7 @@ class Vector4
 };
 
 
-}; //math
-}; //rc
+} //math
+} //rc
 
 #endif//_RC_VECTOR4_H_

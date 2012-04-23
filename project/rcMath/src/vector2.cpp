@@ -76,5 +76,5 @@ void Vector2::scale(Vector2 *dst, const Vector2 &src0, const VECTOR2_TYPE &src1)
     dst->y = src0.y * src1;
 }
 
-}; //math
-}; //rc
+} //math
+} //rc

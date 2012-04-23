@@ -103,7 +103,7 @@ class Vector3
 };
 
 
-}; //math
-}; //rc
+} //math
+} //rc
 
 #endif//_RC_VECTOR3_H_

@@ -6,9 +6,6 @@
 #include "matrix4.h"
 #include <string.h>
 
-namespace {
-};
-
 namespace rc {
 namespace math { 
 
@@ -86,7 +83,6 @@ void Matrix4::add(Matrix4 *dst, const Matrix4 &src0, const Matrix4 &src1)
     dst->v[13] = src0.v[13] + src1.v[13];
     dst->v[14] = src0.v[14] + src1.v[14];
     dst->v[15] = src0.v[15] + src1.v[15];
-    dst->v[16] = src0.v[16] + src1.v[16];
 }
 
 void Matrix4::sub(Matrix4 *dst, const Matrix4 &src0, const Matrix4 &src1)
@@ -107,7 +103,6 @@ void Matrix4::sub(Matrix4 *dst, const Matrix4 &src0, const Matrix4 &src1)
     dst->v[13] = src0.v[13] - src1.v[13];
     dst->v[14] = src0.v[14] - src1.v[14];
     dst->v[15] = src0.v[15] - src1.v[15];
-    dst->v[16] = src0.v[16] - src1.v[16];
 }
 
 
@@ -167,5 +162,5 @@ void Matrix4::copy(Matrix4 *dst, const Matrix4 &src)
 }
 
 
-}; //namespace math
-}; //namespace rc
+} //namespace math
+} //namespace rc

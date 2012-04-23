@@ -103,8 +103,8 @@ class WindowGame : public IWindowGame
 
 
 /* ------------------------------- */
-};	// namespace base
-};	// namespace rc
+}	// namespace base
+}	// namespace rc
 /* ------------------------------- */
 
 #endif

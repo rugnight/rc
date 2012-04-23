@@ -82,5 +82,5 @@ void Vector3::scale(Vector3 *dst, const Vector3 &src0, const VECTOR3_TYPE &src1)
     dst->z = src0.z * src1;
 }
 
-}; //math
-}; //rc
+} //math
+} //rc

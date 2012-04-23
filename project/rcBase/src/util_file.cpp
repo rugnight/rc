@@ -32,4 +32,4 @@ char* createBufferFromFile(const char *file)
 }
 
 
-}; // namespace rc
+} // namespace rc

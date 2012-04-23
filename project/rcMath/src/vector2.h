@@ -102,7 +102,7 @@ class Vector2
 };
 
 
-}; //math
-}; //rc
+} //math
+} //rc
 
 #endif//_RC_VECTOR2_H_

@@ -73,5 +73,5 @@ void GLShader::use()
 }
 
 
-}; // namespace rc
+} // namespace rc
 
