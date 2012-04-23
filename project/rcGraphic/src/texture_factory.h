@@ -51,6 +51,6 @@ private:
 };
 
 
-};  // namespace rc
+}  // namespace rc
 
 #endif //_TEXTURE_FACTORY_H_

@@ -29,7 +29,7 @@ class GraphicDevice
         // --------------------------------------------------
         // 頂点型の設定
         // --------------------------------------------------
-        virtual void set_vertex_type(VERTEX_TYPE type);
+        virtual void set_vertex_type(VERTEX_TYPE type) = 0;
 
         // --------------------------------------------------
         // モデルビュー設定
@@ -39,12 +39,12 @@ class GraphicDevice
         // --------------------------------------------------
         // カメラの設定(Projection)
         // --------------------------------------------------
-        virtual void set_projection_orthograhy(f32 width, f32 height, f32 z_near, f32 z_far);
+        virtual void set_projection_orthograhy(f32 width, f32 height, f32 z_near, f32 z_far) = 0;
 
         // --------------------------------------------------
         // 描画
         // --------------------------------------------------
-        virtual void draw(DRAW_MODE mode, u32 vertex_num, void *vertex_array);
+        virtual void draw(DRAW_MODE mode, u32 vertex_num, void *vertex_array) = 0;
 
     private:
 };
@@ -126,7 +126,6 @@ public:
     // Shader
     virtual void shaderUse(u32 id);
 
-;
     // Draw
 	virtual void drawArrays(int draw_mode, int begin, int count);
 
@@ -134,8 +133,8 @@ private:
 };
 #endif
 
-}; // graphic
-}; // namespace rc
+} // graphic
+} // namespace rc
 
 #endif
 

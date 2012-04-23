@@ -12,6 +12,6 @@ namespace rc {
 /* ファイルをバッファに読み込む */
 char* createBufferFromFile(const char *file);
 
-}; // namespace rc
+} // namespace rc
 
 #endif //_RC_UTIL_FILE_H_

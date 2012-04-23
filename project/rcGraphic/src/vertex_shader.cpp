@@ -79,4 +79,4 @@ bool GLVertexShader::destroy()
 	return true;
 }
 
-}; // namespace rc
+} // namespace rc

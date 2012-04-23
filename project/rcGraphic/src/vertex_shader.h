@@ -60,5 +60,5 @@ class VertexShader : public GLVertexShader
 };
 
 
-}; // namespace rc
+} // namespace rc
 #endif //_RC_VERTEX_SHADER_H_

@@ -137,6 +137,6 @@ protected:
 #endif
 
 
-};
+}
 
 #endif // _RC_TEXTURE_H_

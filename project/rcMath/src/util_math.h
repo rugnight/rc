@@ -12,7 +12,7 @@ namespace math {
 // x以上の最小の2の冪乗を返す
 int toPow2(int x);
 
-}; //namespace math
-}; //namespace rc
+} //namespace math
+} //namespace rc
 
 #endif //_RC_UTIL_MATH_H_

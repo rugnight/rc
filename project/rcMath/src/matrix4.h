@@ -90,8 +90,8 @@ class Matrix4
 };
 
 
-}; //namespace math
-}; //namespace rc
+} //namespace math
+} //namespace rc
 
 
 #endif//_RC_MATRIX4_H_

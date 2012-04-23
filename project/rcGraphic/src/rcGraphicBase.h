@@ -15,7 +15,7 @@
 // --------------------------
 // ビルド環境の選択
 // --------------------------
-//#define RC_USE_XCODE_OPENGL_FRAMEWORK
+#define RC_USE_XCODE_OPENGL_FRAMEWORK
 
 // --------------------------
 // グラフィックデバイスの選択

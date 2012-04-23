@@ -79,4 +79,4 @@ bool GLPixelShader::destroy()
 	return true;
 }
 
-}; // namespace rc
+} // namespace rc

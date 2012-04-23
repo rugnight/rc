@@ -17,5 +17,5 @@ int toPow2(int x)
     return y;
 }
 
-}; //namespace math
-}; //namespace rc
+} //namespace math
+} //namespace rc

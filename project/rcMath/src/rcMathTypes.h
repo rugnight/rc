@@ -21,8 +21,8 @@ const u32 MATRIX4_ROW_NUM    = 4;
 const u32 MATRIX4_COLUMN_NUM = 4;
 const u32 MATRIX4_ELEM_NUM   = MATRIX4_ROW_NUM * MATRIX4_COLUMN_NUM;
 
-};
-};
+}
+}
 
 #endif//_RC_MATH_TYPES_H_
 

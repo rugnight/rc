@@ -69,5 +69,5 @@ void Vector4::scale(Vector4 *dst, const Vector4 &src0, const VECTOR4_TYPE &src1)
     dst->w = src0.w * src1;
 }
 
-}; //math
-}; //rc
+} //math
+} //rc

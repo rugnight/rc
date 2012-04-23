@@ -60,6 +60,6 @@ class PixelShader : public GLPixelShader
 };
 
 
-}; // namespace rc
+} // namespace rc
 
 #endif //_RC_PIXEL_SHADER_H_

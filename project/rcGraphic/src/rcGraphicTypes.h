@@ -46,23 +46,25 @@ typedef enum vertex_type {
     VERTEX_TYPE_2D_COLOR,
 }VERTEX_TYPE;
 
-typedef class vertex_2d{
-    public:
+typedef struct vertex_2d{
         union {
             f32 v[2];
             struct { f32 x, y; };
         };
 } VERTEX_2D;
 
-typedef class vertex_2d_color : public vertex_2d {
-    public:
+typedef struct vertex_2d_color {
+        union {
+            f32 v[2];
+            struct { f32 x, y; };
+        };
         union {
             u32 color;
             struct { u8 b, g, r, a; };
         };
 } VERTEX_2D_COLOR;
 
-};	// graphic 
-};	// rc 
+}// graphic 
+}// rc 
 
 #endif//_RC_GRAPHIC_TYPEDEF_H_INCLUDED_

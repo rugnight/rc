@@ -78,5 +78,5 @@ void GraphicDeviceOpenGL::draw(DRAW_MODE mode, u32 vertex_num, void *vertex_arra
 
 
 
-}; // namespace graphic
-}; // namespace rc
+} // namespace graphic
+} // namespace rc
