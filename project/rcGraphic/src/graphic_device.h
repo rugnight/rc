@@ -23,8 +23,8 @@ class GraphicDevice
 /* ---------------------------------------------------------------------- */
 {
     public:
-        GraphicDevice();
-        virtual ~GraphicDevice();
+        GraphicDevice() {}
+        virtual ~GraphicDevice() {}
 
         // --------------------------------------------------
         // 頂点型の設定
