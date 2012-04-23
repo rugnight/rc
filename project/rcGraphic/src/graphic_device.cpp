@@ -51,6 +51,10 @@ void GraphicDeviceOpenGL::draw(DRAW_MODE mode, u32 vertex_num, void *vertex_arra
     GLenum gl_mode = GL_NONE;
     switch ( mode ) 
     {
+        case DRAW_MODE_TRIANGLES:
+            gl_mode = GL_TRIANGLES;
+            break;
+
         case DRAW_MODE_TRIANGLE_STRIP:
             gl_mode = GL_TRIANGLE_STRIP;
             break;
