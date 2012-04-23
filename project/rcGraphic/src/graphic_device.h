@@ -9,16 +9,14 @@
 #ifndef _RC_GRAPHIC_DEVICE_H_
 #define _RC_GRAPHIC_DEVICE_H_
 
-
-
 #include "rcGraphicBase.h"
 
+#if 1
 
-#if 0
-#include "texture.h"
-
+using rc::math::Matrix4;
 
 namespace rc { 
+namespace graphic {
 
 /* ---------------------------------------------------------------------- */
 class GraphicDevice
@@ -28,9 +26,30 @@ class GraphicDevice
         GraphicDevice();
         virtual ~GraphicDevice();
 
+        // --------------------------------------------------
+        // 頂点型の設定
+        // --------------------------------------------------
+        virtual void set_vertex_type(VERTEX_TYPE type);
+
+        // --------------------------------------------------
+        // モデルビュー設定
+        // --------------------------------------------------
+        //virtual void set_model_view(
+
+        // --------------------------------------------------
+        // カメラの設定(Projection)
+        // --------------------------------------------------
+        virtual void set_projection_orthograhy(f32 width, f32 height, f32 z_near, f32 z_far);
+
+        // --------------------------------------------------
+        // 描画
+        // --------------------------------------------------
+        virtual void draw(DRAW_MODE mode, u32 vertex_num, void *vertex_array);
+
     private:
 };
 
+#ifdef RC_USE_OPENGL
 /* ---------------------------------------------------------------------- */
 class GraphicDeviceOpenGL : public GraphicDevice
 /* ---------------------------------------------------------------------- */
@@ -39,8 +58,28 @@ class GraphicDeviceOpenGL : public GraphicDevice
         GraphicDeviceOpenGL();
         virtual ~GraphicDeviceOpenGL();
 
+        // --------------------------------------------------
+        // 頂点型の設定
+        // --------------------------------------------------
+        virtual void set_vertex_type(VERTEX_TYPE type);
+
+        // --------------------------------------------------
+        // モデルビュー設定
+        // --------------------------------------------------
+
+        // --------------------------------------------------
+        // カメラの設定(Projection)
+        // --------------------------------------------------
+        virtual void set_projection_orthograhy(f32 width, f32 height, f32 z_near, f32 z_far);
+
+        // --------------------------------------------------
+        // 描画
+        // --------------------------------------------------
+        virtual void draw(DRAW_MODE mode, u32 vertex_num, void *vertex_array);
+
     private:
 };
+#endif//RC_USE_OPENGL
 
 #if 0
 /* ---------------------------------------------------------------------- */
@@ -95,6 +134,7 @@ private:
 };
 #endif
 
+}; // graphic
 }; // namespace rc
 
 #endif

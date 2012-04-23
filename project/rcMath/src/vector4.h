@@ -6,7 +6,7 @@
 #ifndef _RC_VECTOR4_H_
 #define _RC_VECTOR4_H_
 
-#include "rcMath.h"
+#include "rcMathBase.h"
 
 namespace rc {
 namespace math {

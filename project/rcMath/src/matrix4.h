@@ -6,7 +6,7 @@
 #ifndef _RC_MATRIX4_H_
 #define _RC_MATRIX4_H_
 
-#include "rcMath.h"
+#include "rcMathBase.h"
 #include "vector4.h"
 
 namespace rc {

@@ -8,6 +8,14 @@
 #define _RC_GRAPHIC_BASE_H_
 
 #include "rc_base.h"
+#include "rcMath.h"
+#include "rcGraphicTypes.h"
+
+
+// --------------------------
+// ビルド環境の選択
+// --------------------------
+//#define RC_USE_XCODE_OPENGL_FRAMEWORK
 
 // --------------------------
 // グラフィックデバイスの選択
@@ -21,7 +29,13 @@
 // --------------------------
 #ifdef RC_USE_OPENGL
 // 依存物の読み込み
-#include <gl3.h>
+#ifdef RC_USE_XCODE_OPENGL_FRAMEWORK
+#include <OpenGL/OpenGL.h>
+#include <OpenGL/gl.h>
+#else
+#include <OpenGL.h>
+#include <gl.h>
+#endif
 // 型の定義
 //typedef GLuint u32;
 #endif //RC_USE_OPENGL

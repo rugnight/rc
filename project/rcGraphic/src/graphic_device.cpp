@@ -9,62 +9,70 @@
 #include "graphic_device.h"
 
 namespace rc { 
+namespace graphic {
 
-#if 0
+#ifdef RC_USE_OPENGL
+
 /* ---------------------------------------------------------------------- */
-//  class GLGraphicDevice
+//  class GraphicDeviceOpenGL : public GraphicDevice
 /* ---------------------------------------------------------------------- */
-GLGraphicDevice::GLGraphicDevice()
+GraphicDeviceOpenGL::GraphicDeviceOpenGL()
 {
 }
 
-GLGraphicDevice::~GLGraphicDevice()
+GraphicDeviceOpenGL::~GraphicDeviceOpenGL()
 {
 }
 
-// Texture
-void GLGraphicDevice::activeTexture(int tex_target)
+// --------------------------------------------------
+// 頂点型の設定
+// --------------------------------------------------
+void GraphicDeviceOpenGL::set_vertex_type(VERTEX_TYPE type)
 {
-    glActiveTexture(tex_target);
 }
 
-void GLGraphicDevice::bindTexture(int tex_target, ITexture* p_tex)
+// --------------------------------------------------
+// モデルビュー設定
+// --------------------------------------------------
+
+// --------------------------------------------------
+// カメラの設定(Projection)
+// --------------------------------------------------
+void GraphicDeviceOpenGL::set_projection_orthograhy(f32 width, f32 height, f32 z_near, f32 z_far)
 {
-    glBindTexture(tex_target, p_tex->getID());
 }
 
-void GLGraphicDevice::texParameteri(int tex_target, int tex_param, int tex_param_value)
-{
-    glTexParameteri(tex_target, tex_param, tex_param_value);
-}
 
-// Vertex
-void GLGraphicDevice::enableVertexAttribArray(int attribute_no)
-{
-    glEnableVertexAttribArray(attribute_no);
-}
+// --------------------------------------------------
+// 描画
+// --------------------------------------------------
+void GraphicDeviceOpenGL::draw(DRAW_MODE mode, u32 vertex_num, void *vertex_array)
+{  
+    GLenum gl_mode = GL_NONE;
+    switch ( mode ) 
+    {
+        case DRAW_MODE_TRIANGLE_STRIP:
+            gl_mode = GL_TRIANGLE_STRIP;
+            break;
 
-void GLGraphicDevice::disableVertexAttribArray(int attribute_no)
-{
-    glDisableVertexAttribArray(attribute_no);
-}
+        default:
+            return;
+            break;
+    };
+    glBegin(gl_mode);
 
-void GLGraphicDevice::vertexAttribPointer(int attribute_no, int attribute_elem_num, int data_type, bool b_normalized, int stride, const void* p_data)
-{
-    glVertexAttribPointer(attribute_no, attribute_elem_num, data_type, b_normalized, stride, p_data);
+    VERTEX_2D_COLOR *vtx = static_cast<VERTEX_2D_COLOR*>(vertex_array);
+    for (unsigned i = 0; i < vertex_num; i++) 
+    {
+        glColor4ub( vtx[i].r, vtx[i].g, vtx[i].b, vtx[i].a);
+        glVertex2f( vtx[i].x, vtx[i].y);
+    }
+    glEnd();
 }
+#endif//RC_USE_OPENGL
 
-// Shader
-void GLGraphicDevice::shaderUse(u32 id)
-{
-    glUseProgram(id);
-}
 
-// Draw
-void GLGraphicDevice::drawArrays(int draw_mode, int begin, int count)
-{
-	glDrawArrays(draw_mode, begin, count);
-}
-#endif
 
+
+}; // namespace graphic
 }; // namespace rc
