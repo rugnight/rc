@@ -10,6 +10,7 @@
 #define _RC_GRAPHIC_DEVICE_H_
 
 #include "rcGraphicBase.h"
+#include "vertex.h"
 
 #if 1
 
@@ -29,7 +30,8 @@ class GraphicDevice
         // --------------------------------------------------
         // 頂点型の設定
         // --------------------------------------------------
-        virtual void set_vertex_type(VERTEX_TYPE type) = 0;
+        void set_vertex_type(VERTEX_TYPE type) { m_vertex_type = type; }
+        u32 get_vertex_type() { return m_vertex_type; }
 
         // --------------------------------------------------
         // モデルビュー設定
@@ -47,6 +49,7 @@ class GraphicDevice
         virtual void draw(DRAW_MODE mode, u32 vertex_num, void *vertex_array) = 0;
 
     private:
+        u32 m_vertex_type;
 };
 
 #ifdef RC_USE_OPENGL

@@ -41,28 +41,11 @@ typedef enum {
 	DRAW_MODE_POLYGON,
 } DRAW_MODE;
 
+// 定義済みの頂点型
 typedef enum vertex_type {
     VERTEX_TYPE_2D,
     VERTEX_TYPE_2D_COLOR,
 }VERTEX_TYPE;
-
-typedef struct vertex_2d{
-        union {
-            f32 v[2];
-            struct { f32 x, y; };
-        };
-} VERTEX_2D;
-
-typedef struct vertex_2d_color {
-        union {
-            f32 v[2];
-            struct { f32 x, y; };
-        };
-        union {
-            u32 color;
-            struct { u8 b, g, r, a; };
-        };
-} VERTEX_2D_COLOR;
 
 }// graphic 
 }// rc 

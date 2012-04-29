@@ -7,6 +7,49 @@
 
 #include "rcGraphicBase.h"
 
+/* ------------------------------------------------ */
+// 頂点型の定義
+/* ------------------------------------------------ */
+
+namespace rc {
+namespace graphic {
+
+#ifdef RC_USE_OPENGL
+
+// VERTEX_TYPE_2D,
+typedef struct vertex_2d{
+    union {
+        f32 v[2];
+        struct { f32 x, y; };
+    };
+} VERTEX_2D;
+
+// VERTEX_TYPE_2D_COLOR,
+typedef struct vertex_2d_color {
+    union {
+        f32 v[2];
+        struct { f32 x, y; };
+    };
+    union {
+        u32 color;
+        struct { u8 b, g, r, a; };
+    };
+} VERTEX_2D_COLOR;
+
+#endif//RC_USE_OPENGL
+
+} //namespace rc
+} //namespace graphic
+
+
+
+
+
+
+
+
+
+
 template<class Vertex>
 /* ------------------------------------------------ */
 class VertexBuffer
