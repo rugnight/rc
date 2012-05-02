@@ -10,7 +10,7 @@
 #include "rc_base.h"
 #include "rcMath.h"
 #include "rcGraphicTypes.h"
-
+#include "rcGraphicVertexTypes.h"
 
 // --------------------------
 // ビルド環境の選択

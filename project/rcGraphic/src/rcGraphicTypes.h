@@ -41,12 +41,6 @@ typedef enum {
 	DRAW_MODE_POLYGON,
 } DRAW_MODE;
 
-// 定義済みの頂点型
-typedef enum vertex_type {
-    VERTEX_TYPE_2D,
-    VERTEX_TYPE_2D_COLOR,
-}VERTEX_TYPE;
-
 }// graphic 
 }// rc 
 
