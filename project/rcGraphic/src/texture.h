@@ -26,14 +26,14 @@ class Texture
         Texture()  {}
         virtual ~Texture() {}
 
-        void create_from_file(const char* path);
-
         // テクスチャ情報取得
         const Desc& get_desc() { return m_desc; }
 
         // テクスチャリソース取得
-        // 各グラフィックデバイス毎に実装
         virtual void* get_resource() = 0;
+
+        // テクスチャ生成
+        virtual void create_from_file(const char* path) = 0;
 
     protected:
         Desc    m_desc;
@@ -48,9 +48,14 @@ public:
     TextureOpenGL();
     virtual ~TextureOpenGL();
 
-    virtual void* get_resource() { return NULL; }
+    // テクスチャリソース取得
+    virtual void* get_resource();
+
+    // テクスチャ生成
+    virtual void create_from_file(const char* path);
 
 private:
+    GLuint m_tex_name;
 };
 #endif//RC_USE_OPENGL
 

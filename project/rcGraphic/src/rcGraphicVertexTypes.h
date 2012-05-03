@@ -17,6 +17,7 @@ typedef enum vertex_type {
     VERTEX_TYPE_2D_COLOR,
 
     VERTEX_TYPE_T2F_V3F,
+    VERTEX_TYPE_T2F_C4UB_V3F,
 }VERTEX_TYPE;
 
 // VERTEX_TYPE_2D,
@@ -50,6 +51,22 @@ typedef struct vertex_t2f_v3f {
         struct { f32 x, y, z; };
     };
 } VERTEX_T2F_V3F;
+
+// VERTEX_TYPE_T2F_C4UB_V3F,
+typedef struct vertex_t2f_c4ub_v3f {
+    union {
+        f32 uv[2];
+        struct { f32 u, v; };
+    };
+    union {
+        u32 color;
+        struct { u8 a, b, g, r; };
+    };
+    union {
+        f32 va[3];
+        struct { f32 x, y, z; };
+    };
+} VERTEX_T2F_C4UB_V3F;
 
 } //namespace rc
 } //namespace graphic

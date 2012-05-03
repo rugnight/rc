@@ -7,13 +7,71 @@
 //============================================================================
 
 #include "graphic_device.h"
-#include "bitmap.h"
+#include "texture.h"
+
 
 namespace rc { 
 namespace graphic {
 
 #ifdef RC_USE_OPENGL
 
+/* ---------------------------------------------------------------------- */
+// namespace
+/* ---------------------------------------------------------------------- */
+using rc::graphic::Texture;
+using rc::graphic::TextureOpenGL;
+
+/* ---------------------------------------------------------------------- */
+// static functions
+/* ---------------------------------------------------------------------- */
+
+// --------------------------------------------------
+// OpenGLのブレンドモードへ変換
+// --------------------------------------------------
+static GLenum trans_blend_mode_to_gl(BLEND_MODE blend_mode)
+{
+    GLenum gl_enum;
+    switch ( blend_mode ) 
+    {
+        case BLEND_MODE_ZERO:
+            gl_enum = GL_ZERO;
+            break;
+        case BLEND_MODE_ONE:
+            gl_enum = GL_ONE;
+            break;
+        case BLEND_MODE_SRC_COLOR:
+            gl_enum = GL_SRC_COLOR;
+            break;
+        case BLEND_MODE_ONE_MINUS_SRC_COLOR:
+            gl_enum = GL_ONE_MINUS_SRC_COLOR;
+            break;
+        case BLEND_MODE_DST_COLOR:
+            gl_enum = GL_DST_COLOR;
+            break;
+        case BLEND_MODE_ONE_MINUS_DST_COLOR:
+            gl_enum = GL_ONE_MINUS_DST_COLOR;
+            break;
+        case BLEND_MODE_SRC_ALPHA:
+            gl_enum = GL_SRC_ALPHA;
+            break;
+        case BLEND_MODE_ONE_MINUS_SRC_ALPHA:
+            gl_enum = GL_ONE_MINUS_SRC_ALPHA;
+            break;
+        case BLEND_MODE_DST_ALPHA:
+            gl_enum = GL_DST_ALPHA;
+            break;
+        case BLEND_MODE_ONE_MINUS_DST_ALPHA:
+            gl_enum = GL_ONE_MINUS_DST_ALPHA;
+            break;
+        case BLEND_MODE_SRC_ALPHA_SATURATE:
+            gl_enum = GL_SRC_ALPHA_SATURATE;
+            break;
+        default:
+            break;
+    }
+    return gl_enum;
+}
+    
 /* ---------------------------------------------------------------------- */
 //  class GraphicDeviceOpenGL : public GraphicDevice
 /* ---------------------------------------------------------------------- */
@@ -52,44 +110,21 @@ void GraphicDeviceOpenGL::set_projection_orthograhy(f32 width, f32 height, f32 z
 }
 
 // --------------------------------------------------
-// テクスチャ
+// テクスチャの設定
 // --------------------------------------------------
-Texture GraphicDeviceOpenGL::create_texture_from_file(const char *file_path)
+void GraphicDeviceOpenGL::set_texture(Texture *p_tex)
 {
-    // 指定ファイルのビットマップ化
-    rc::graphic::TextureOpenGL ret;
-    rc::graphic::Bitmap bitmap;
-    bitmap.create_from_file(file_path);
+    if ( NULL == p_tex ) 
+    {
+        glDisable(GL_TEXTURE_RECTANGLE_EXT);
+        return;
+    }
 
-    ///// テクスチャの作成
+    GLuint* resource = static_cast<GLuint*>(p_tex->get_resource());
+    GLuint tex_name = (*resource);
     
-    GLuint tex;
-    // [4/5] テクスチャの名前を作る
     glEnable(GL_TEXTURE_RECTANGLE_EXT);
-    glGenTextures(1, &tex);
-    glBindTexture(GL_TEXTURE_RECTANGLE_EXT, tex);
-    
-    // [5/5] ビットマップを割り当てる
-    glPixelStorei(GL_UNPACK_ROW_LENGTH, (GLint)bitmap.get_width());
-    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    // 各行のピクセルデータの境界の種類
-    // 1: バイト単位
-    // 2: 偶数バイト単位
-    // 4: WORD（2バイト）単位
-    // 8: DWORD（4バイト）単位
-    
-    glTexImage2D(GL_TEXTURE_RECTANGLE_EXT,
-                 0,             // MIPMAPのレベル
-                 GL_RGBA,   // テクスチャで使う
-                 // カラーコンポーネント数
-                 (GLsizei)bitmap.get_width(),
-                 (GLsizei)bitmap.get_height(),
-                 0,         // ボーダー
-                 GL_BGRA,   // ビットマップの色の並び順
-                 GL_UNSIGNED_INT_8_8_8_8,
-                 bitmap.get_bytes()
-                 );
-    return ret;
+    glBindTexture(GL_TEXTURE_RECTANGLE_EXT, tex_name);
 }
 
 // --------------------------------------------------
@@ -110,6 +145,10 @@ void GraphicDeviceOpenGL::draw_vertex_array(DRAW_MODE mode, u32 vertex_num, void
 
         case VERTEX_TYPE_T2F_V3F:
             gl_vertex_type = GL_T2F_V3F;
+            break;
+
+        case VERTEX_TYPE_T2F_C4UB_V3F:
+            gl_vertex_type = GL_T2F_C4UB_V3F;
             break;
 
         default:
@@ -144,6 +183,55 @@ void GraphicDeviceOpenGL::draw_vertex_array(DRAW_MODE mode, u32 vertex_num, void
     glEnd();
 #endif
 }
+
+// --------------------------------------------------
+// 描画領域のクリア
+// --------------------------------------------------
+void GraphicDeviceOpenGL::set_clear_color(float a, float r, float g, float b)
+{
+    glClearColor(a, r, g, b);
+}
+
+void GraphicDeviceOpenGL::clear(RENDER_BUFFER render_buffer)
+{
+    GLbitfield bit_field = 0;
+    switch ( render_buffer ) 
+    {
+        case COLOR_BUFFER_BIT:
+            bit_field = GL_COLOR_BUFFER_BIT;
+            break;
+        case DEPTH_BUFFER_BIT:
+            bit_field = GL_DEPTH_BUFFER_BIT;
+            break;
+        case ACCUM_BUFFER_BIT:
+            bit_field = GL_ACCUM_BUFFER_BIT;
+            break;
+        case STENCIL_BUFFER_BIT:
+            bit_field = GL_STENCIL_BUFFER_BIT;
+            break;
+        default:
+            break;
+    }
+    glClear(bit_field);
+}
+
+// --------------------------------------------------
+// アルファブレンドの設定
+// --------------------------------------------------
+void GraphicDeviceOpenGL::set_blend_enable(bool flg)
+{
+    if ( flg ) 
+        glEnable(GL_BLEND);
+    else 
+        glDisable(GL_BLEND);
+}
+
+
+void GraphicDeviceOpenGL::set_blend_mode(BLEND_MODE src, BLEND_MODE dst)
+{
+    glBlendFunc(trans_blend_mode_to_gl(src), trans_blend_mode_to_gl(dst));
+}
+
 #endif//RC_USE_OPENGL
 
 
