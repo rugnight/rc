@@ -35,7 +35,8 @@ void TextureOpenGL::create_from_file(const char* path)
     // 指定ファイルのビットマップ化
     rc::graphic::TextureOpenGL ret;
     rc::graphic::Bitmap bitmap;
-    bitmap.create_from_file(path);
+    //bitmap.create_from_file(path);
+    bitmap.create_from_font("黒川エレン");
 
     ///// テクスチャの作成
     GLuint tex = GL_INVALID_VALUE;

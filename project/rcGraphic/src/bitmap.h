@@ -20,6 +20,7 @@ class Bitmap
         virtual ~Bitmap();
 
         bool create_from_file(const char* file_path);
+        bool create_from_font(const char* str);
 
         u8* get_bytes();
         float get_width() { return m_width; }

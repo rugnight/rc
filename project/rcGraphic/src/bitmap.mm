@@ -34,7 +34,6 @@ bool Bitmap::create_from_file(const char* file_path)
 {
     destroy();
 
-#if 1
     GLuint ret = GL_INVALID_VALUE;
     
     NSString* imageName = [NSString stringWithCString: file_path encoding:NSUTF8StringEncoding];
@@ -72,8 +71,78 @@ bool Bitmap::create_from_file(const char* file_path)
     CFRelease(urlRef);
     
     return ret;
-#endif 
 }
+
+#define TEX_WIDTH 32
+#define TEX_HEIGHT 32
+
+bool Bitmap::create_from_font(const char* str)
+{
+    const char* font_name = "HiraKakuPro-W6";
+    const f32 fontSize = 32;
+
+	NSString *font_name_ns = [NSString 
+        stringWithCString   : font_name
+        encoding            : NSUTF8StringEncoding];
+
+    destroy();
+ 
+	// cocoa で扱う文字列に変換
+	NSString *string = [NSString 
+        stringWithCString   : str 
+        encoding            : NSUTF8StringEncoding];
+	u32 strSize = [string length];
+
+    // 描画用のイメージを生成
+    u32 img_width  = TEX_WIDTH * strSize;
+    u32 img_height = TEX_HEIGHT;
+    NSImage* img = [[NSImage alloc] 
+        initWithSize    : NSMakeSize(img_width, img_height)];
+
+	// フォント設定
+	NSFont *font = [NSFont fontWithName:font_name_ns size:fontSize];
+	NSDictionary *attrsDictionary = [NSDictionary 
+        dictionaryWithObjectsAndKeys: font, 
+                                      NSFontAttributeName,
+                                      [NSColor whiteColor], 
+                                      NSForegroundColorAttributeName,
+                                      [NSColor clearColor], 
+                                      NSBackgroundColorAttributeName,
+                                      nil ];
+ 
+	// alloc attributed string
+	NSAttributedString *attrString;
+	attrString = [[NSAttributedString alloc] 
+        initWithString:string attributes:attrsDictionary];
+ 
+	// build texture image
+    [img setBackgroundColor:[NSColor clearColor]];
+    [img lockFocus];
+	for( u32 i = 0; i < strSize; i++ ){
+        NSAttributedString *singleChar = [attrString 
+            attributedSubstringFromRange    : NSMakeRange(i,1)];
+
+        NSSize size = [singleChar size];
+
+        f32 center_x = (i * TEX_WIDTH) + (TEX_WIDTH-size.width)/2;
+        f32 center_y = (TEX_HEIGHT-size.height)/2;
+        NSPoint point = NSMakePoint( center_x, center_y );
+		// draw character to image
+		[singleChar drawAtPoint:point];
+	}
+    [img unlockFocus];
+    NSBitmapImageRep *image_rep = [[NSBitmapImageRep alloc] initWithData:[img TIFFRepresentation]];
+ 
+    u32 bmp_size = [image_rep bytesPerPlane];
+    m_p_data = new u8[bmp_size];
+    memcpy(m_p_data, [image_rep bitmapData], bmp_size); 
+    m_width  = TEX_WIDTH * strSize;
+    m_height = TEX_HEIGHT;
+    
+    return true;
+}
+
+
 
 u8* Bitmap::get_bytes()
 {

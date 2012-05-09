@@ -53,6 +53,7 @@ public:
 
     // テクスチャ生成
     virtual void create_from_file(const char* path);
+    //virtual void create_from_fonts(const char* path);
 
 private:
     GLuint m_tex_name;
