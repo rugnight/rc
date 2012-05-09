@@ -23,9 +23,9 @@ Bitmap::~Bitmap()
 bool Bitmap::create_from_file(const char* file_path)
 {
 }
-#endif
 
-}
-}
+} // rc
+} // graphic
+#endif
 
 
