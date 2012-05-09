@@ -26,6 +26,9 @@ class Texture
         Texture()  {}
         virtual ~Texture() {}
 
+        // 破棄
+        virtual void destroy() = 0;
+
         // テクスチャ情報取得
         const Desc& get_desc() { return m_desc; }
 
@@ -34,6 +37,7 @@ class Texture
 
         // テクスチャ生成
         virtual void create_from_file(const char* path) = 0;
+        virtual void create_from_font(const char *str, const char *font_name, u32 font_size) = 0;
 
     protected:
         Desc    m_desc;
@@ -48,12 +52,15 @@ public:
     TextureOpenGL();
     virtual ~TextureOpenGL();
 
+    // 破棄
+    virtual void destroy();
+
     // テクスチャリソース取得
     virtual void* get_resource();
 
     // テクスチャ生成
     virtual void create_from_file(const char* path);
-    //virtual void create_from_fonts(const char* path);
+    virtual void create_from_font(const char *str, const char *font_name, u32 font_size);
 
 private:
     GLuint m_tex_name;

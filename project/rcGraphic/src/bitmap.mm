@@ -73,34 +73,23 @@ bool Bitmap::create_from_file(const char* file_path)
     return ret;
 }
 
-#define TEX_WIDTH 32
-#define TEX_HEIGHT 32
-
-bool Bitmap::create_from_font(const char* str)
+bool Bitmap::create_from_font(const char *str, const char *font_name, u32 font_size)
 {
-    const char* font_name = "HiraKakuPro-W6";
-    const f32 fontSize = 32;
+    destroy();
 
+    // フォント名を cocoa で扱う文字列に変換
 	NSString *font_name_ns = [NSString 
         stringWithCString   : font_name
         encoding            : NSUTF8StringEncoding];
 
-    destroy();
- 
-	// cocoa で扱う文字列に変換
+	// 文章を cocoa で扱う文字列に変換
 	NSString *string = [NSString 
         stringWithCString   : str 
         encoding            : NSUTF8StringEncoding];
 	u32 strSize = [string length];
 
-    // 描画用のイメージを生成
-    u32 img_width  = TEX_WIDTH * strSize;
-    u32 img_height = TEX_HEIGHT;
-    NSImage* img = [[NSImage alloc] 
-        initWithSize    : NSMakeSize(img_width, img_height)];
-
 	// フォント設定
-	NSFont *font = [NSFont fontWithName:font_name_ns size:fontSize];
+	NSFont *font = [NSFont fontWithName:font_name_ns size:font_size];
 	NSDictionary *attrsDictionary = [NSDictionary 
         dictionaryWithObjectsAndKeys: font, 
                                       NSFontAttributeName,
@@ -110,12 +99,19 @@ bool Bitmap::create_from_font(const char* str)
                                       NSBackgroundColorAttributeName,
                                       nil ];
  
-	// alloc attributed string
+	// 書式付きの文字列を作成
 	NSAttributedString *attrString;
 	attrString = [[NSAttributedString alloc] 
         initWithString:string attributes:attrsDictionary];
+
+    // 描画用のイメージを生成
+    u32 img_width  = [attrString size].width;//TEX_WIDTH * strSize;
+    u32 img_height = [attrString size].height;//TEX_HEIGHT;
+    NSImage* img = [[NSImage alloc] 
+        initWithSize    : NSMakeSize(img_width, img_height)];
  
-	// build texture image
+	// 書式付きの文字列をイメージに書き込む
+    f32 add_width = 0;
     [img setBackgroundColor:[NSColor clearColor]];
     [img lockFocus];
 	for( u32 i = 0; i < strSize; i++ ){
@@ -124,20 +120,25 @@ bool Bitmap::create_from_font(const char* str)
 
         NSSize size = [singleChar size];
 
-        f32 center_x = (i * TEX_WIDTH) + (TEX_WIDTH-size.width)/2;
-        f32 center_y = (TEX_HEIGHT-size.height)/2;
+        f32 center_x = add_width + 0;//(size.width)/2;
+        f32 center_y = 0;//(TEX_HEIGHT-size.height)/2;
+        add_width    = add_width + size.width;
+
         NSPoint point = NSMakePoint( center_x, center_y );
-		// draw character to image
+		// 描画
 		[singleChar drawAtPoint:point];
 	}
     [img unlockFocus];
+
+    // イメージからビットマップを作成
     NSBitmapImageRep *image_rep = [[NSBitmapImageRep alloc] initWithData:[img TIFFRepresentation]];
  
+    // 自クラスのメンバに格納
     u32 bmp_size = [image_rep bytesPerPlane];
     m_p_data = new u8[bmp_size];
     memcpy(m_p_data, [image_rep bitmapData], bmp_size); 
-    m_width  = TEX_WIDTH * strSize;
-    m_height = TEX_HEIGHT;
+    m_width  = img_width;
+    m_height = img_height;
     
     return true;
 }
