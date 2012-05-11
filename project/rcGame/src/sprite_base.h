@@ -41,6 +41,9 @@ class SpriteBase
 
 		Transform& get_transform() { return m_transform; }
 
+		// 色の設定
+		void set_color(u8 a, u8 r, u8 g, u8 b);
+
 		// 回転中心の設定
 		void set_center(f32 x, f32 y);
 		
@@ -48,6 +51,8 @@ class SpriteBase
 	private:
 		Texture		*m_p_tex;
 		Transform	m_transform;
+
+		u32			m_color;
 
 		bool		m_is_centering;
 		Matrix4		m_center_mat;

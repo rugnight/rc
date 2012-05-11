@@ -18,6 +18,7 @@ namespace game {
 /* ------------------------------ */
 SpriteBase::SpriteBase()
 	: m_p_tex(NULL)
+	, m_color(0xffffffff)
 	, m_is_centering(false)
 {
 }
@@ -42,15 +43,14 @@ void SpriteBase::draw()
     const float w = tex->get_desc().width;
     const float h = tex->get_desc().height;
     
-    static u32 color = (0xff << 0) | (0xff << 8) | (0xff << 16) | (0xff << 24);
-    VERTEX_T2F_C4UB_V3F vertices[] = {
-        { 0.0f , 0.0f , color, 0.0 , 0.0 , 0.0 }, 
-        { w    , 0.0f , color, w   , 0.0 , 0.0 }, 
-        { w    , h    , color, w   , h   , 0.0 }, 
+    static VERTEX_T2F_C4UB_V3F vertices[] = {
+        { 0.0f , 0.0f , m_color, 0.0 , 0.0 , 0.0 }, 
+        { w    , 0.0f , m_color, w   , 0.0 , 0.0 }, 
+        { w    , h    , m_color, w   , h   , 0.0 }, 
         
-        { 0.0f , 0.0f , color, 0.0 , 0.0 , 0.0 }, 
-        { w    , h    , color, w   , h   , 0.0 }, 
-        { 0.0f , h    , color, 0.0 , h   , 0.0 },         
+        { 0.0f , 0.0f , m_color, 0.0 , 0.0 , 0.0 }, 
+        { w    , h    , m_color, w   , h   , 0.0 }, 
+        { 0.0f , h    , m_color, 0.0 , h   , 0.0 },         
     }; 
 
     GraphicDevice *p_device = GraphicManager::Instance().get_device();
@@ -68,6 +68,12 @@ void SpriteBase::draw()
     p_device->set_texture(tex);
     p_device->set_vertex_array(VERTEX_TYPE_T2F_C4UB_V3F, vertices);
     p_device->draw_vertex_array(DRAW_MODE_TRIANGLES, 6);
+}
+
+// 色の設定
+void SpriteBase::set_color(u8 a, u8 r, u8 g, u8 b)
+{
+    m_color = (a << 24) | (b << 16) | (g << 8) | (r << 0);
 }
 
 void SpriteBase::set_center(f32 x, f32 y)
