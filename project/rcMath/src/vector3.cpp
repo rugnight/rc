@@ -9,16 +9,22 @@ namespace rc {
 namespace math {
 
 // --------------------------------------------------
+// static var member
+// --------------------------------------------------
+const Vector3 Vector3::ZERO(0.0f, 0.0f, 0.0f);
+const Vector3 Vector3::UNIT(1.0f, 1.0f, 1.0f);
+
+// --------------------------------------------------
 // constructor
 // --------------------------------------------------
 Vector3::Vector3()
+: x(0.0f), y(0.0f), z(0.0f)
 {
-    Vector3(0.0f, 0.0f, 0.0f);
 }
 
 Vector3::Vector3(VECTOR3_TYPE _n)
+: x(_n), y(_n), z(_n)
 {
-    Vector3(_n, _n, _n);
 }
 
 Vector3::Vector3(VECTOR3_TYPE _x, VECTOR3_TYPE _y, VECTOR3_TYPE _z)
@@ -27,8 +33,8 @@ Vector3::Vector3(VECTOR3_TYPE _x, VECTOR3_TYPE _y, VECTOR3_TYPE _z)
 }
 
 Vector3::Vector3(const Vector3 &src)
+: x(src.x), y(src.y), z(src.z)
 {
-    Vector3(src.x, src.y, src.z);
 }
 
 // --------------------------------------------------

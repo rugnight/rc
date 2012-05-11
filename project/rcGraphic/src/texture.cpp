@@ -68,7 +68,7 @@ TextureOpenGL::~TextureOpenGL()
 // 破棄
 void TextureOpenGL::destroy()
 {
-    if ( GL_INVALID_VALUE == m_tex_name ) {
+    if ( GL_INVALID_VALUE != m_tex_name ) {
         glDeleteTextures(1, &m_tex_name);
     }
 }
@@ -91,6 +91,7 @@ void TextureOpenGL::create_from_file(const char* path)
     m_tex_name    = tex;
     m_desc.width  = bitmap.get_width();
     m_desc.height = bitmap.get_height();
+    m_desc.info   = path;
 }
 
 void TextureOpenGL::create_from_font(const char *str, const char *font_name, u32 font_size)
@@ -105,11 +106,10 @@ void TextureOpenGL::create_from_font(const char *str, const char *font_name, u32
     m_tex_name    = tex;
     m_desc.width  = bitmap.get_width();
     m_desc.height = bitmap.get_height();
+    m_desc.info   = str;
 }
 
 #endif//RC_USE_OPENGL
-
-
 
 }
 }

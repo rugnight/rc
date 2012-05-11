@@ -9,26 +9,42 @@ namespace rc {
 namespace math {
 
 // --------------------------------------------------
+// static var member
+// --------------------------------------------------
+const Vector2 Vector2::ZERO(0.0f, 0.0f);
+const Vector2 Vector2::UNIT(1.0f, 1.0f);
+
+// --------------------------------------------------
 // constructor
 // --------------------------------------------------
 Vector2::Vector2()
+	: x(0.0f), y(0.0f)
 {
-    Vector2(0.0f, 0.0f);
 }
 
 Vector2::Vector2(VECTOR2_TYPE _n)
+	: x(_n), y(_n)
 {
-    Vector2(_n, _n);
 }
 
 Vector2::Vector2(VECTOR2_TYPE _x, VECTOR2_TYPE _y)
-: x(_x), y(_y)
+	: x(_x), y(_y)
 {
 }
 
 Vector2::Vector2(const Vector2 &src)
+	: x(src.x), y(src.y)
 {
-    Vector2(src.x, src.y);
+}
+
+Vector2::Vector2(const Vector3 &src)
+	: x(src.x), y(src.y)
+{
+}
+
+Vector2::Vector2(const Vector4 &src)
+	: x(src.x), y(src.y)
+{
 }
 
 // --------------------------------------------------

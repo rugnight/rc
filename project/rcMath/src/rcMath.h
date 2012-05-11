@@ -8,6 +8,10 @@
 
 #include "rcMathBase.h"
 
+#include "vector2.h"
+#include "vector3.h"
+#include "vector4.h"
 #include "matrix4.h"
+#include "trigonometric.h"
 
 #endif//_RC_MATH_H_

@@ -9,7 +9,6 @@
 #include "graphic_device.h"
 #include "texture.h"
 
-
 namespace rc { 
 namespace graphic {
 
@@ -28,49 +27,6 @@ using rc::graphic::TextureOpenGL;
 // --------------------------------------------------
 // OpenGLのブレンドモードへ変換
 // --------------------------------------------------
-static GLenum trans_blend_mode_to_gl(BLEND_MODE blend_mode)
-{
-    GLenum gl_enum;
-    switch ( blend_mode ) 
-    {
-        case BLEND_MODE_ZERO:
-            gl_enum = GL_ZERO;
-            break;
-        case BLEND_MODE_ONE:
-            gl_enum = GL_ONE;
-            break;
-        case BLEND_MODE_SRC_COLOR:
-            gl_enum = GL_SRC_COLOR;
-            break;
-        case BLEND_MODE_ONE_MINUS_SRC_COLOR:
-            gl_enum = GL_ONE_MINUS_SRC_COLOR;
-            break;
-        case BLEND_MODE_DST_COLOR:
-            gl_enum = GL_DST_COLOR;
-            break;
-        case BLEND_MODE_ONE_MINUS_DST_COLOR:
-            gl_enum = GL_ONE_MINUS_DST_COLOR;
-            break;
-        case BLEND_MODE_SRC_ALPHA:
-            gl_enum = GL_SRC_ALPHA;
-            break;
-        case BLEND_MODE_ONE_MINUS_SRC_ALPHA:
-            gl_enum = GL_ONE_MINUS_SRC_ALPHA;
-            break;
-        case BLEND_MODE_DST_ALPHA:
-            gl_enum = GL_DST_ALPHA;
-            break;
-        case BLEND_MODE_ONE_MINUS_DST_ALPHA:
-            gl_enum = GL_ONE_MINUS_DST_ALPHA;
-            break;
-        case BLEND_MODE_SRC_ALPHA_SATURATE:
-            gl_enum = GL_SRC_ALPHA_SATURATE;
-            break;
-        default:
-            break;
-    }
-    return gl_enum;
-}
     
 /* ---------------------------------------------------------------------- */
 //  class GraphicDeviceOpenGL : public GraphicDevice
@@ -81,14 +37,6 @@ GraphicDeviceOpenGL::GraphicDeviceOpenGL()
 
 GraphicDeviceOpenGL::~GraphicDeviceOpenGL()
 {
-}
-
-// --------------------------------------------------
-// 頂点型の設定
-// --------------------------------------------------
-void GraphicDeviceOpenGL::set_vertex_type(VERTEX_TYPE type)
-{
-    GraphicDevice::set_vertex_type(type);
 }
 
 // --------------------------------------------------
@@ -128,60 +76,19 @@ void GraphicDeviceOpenGL::set_texture(Texture *p_tex)
 }
 
 // --------------------------------------------------
+// 描画設定
+// --------------------------------------------------
+void GraphicDeviceOpenGL::set_vertex_array(VERTEX_TYPE type, void *vertex_array)
+{
+    glInterleavedArrays(type, 0, vertex_array);
+}
+
+// --------------------------------------------------
 // 描画
 // --------------------------------------------------
-void GraphicDeviceOpenGL::draw_vertex_array(DRAW_MODE mode, u32 vertex_num, void *vertex_array)
+void GraphicDeviceOpenGL::draw_vertex_array(DRAW_MODE mode, u32 vertex_num)
 {  
-    GLenum gl_vertex_type = GL_NONE;
-    switch (get_vertex_type()) 
-    {
-        case VERTEX_TYPE_2D:
-            gl_vertex_type = GL_V2F;
-            break;
-
-        case VERTEX_TYPE_2D_COLOR:
-            gl_vertex_type = GL_C4UB_V2F;
-            break;
-
-        case VERTEX_TYPE_T2F_V3F:
-            gl_vertex_type = GL_T2F_V3F;
-            break;
-
-        case VERTEX_TYPE_T2F_C4UB_V3F:
-            gl_vertex_type = GL_T2F_C4UB_V3F;
-            break;
-
-        default:
-            break;
-    };
-
-    GLenum gl_mode = GL_NONE;
-    switch ( mode ) 
-    {
-        case DRAW_MODE_TRIANGLES:
-            gl_mode = GL_TRIANGLES;
-            break;
-        case DRAW_MODE_TRIANGLE_STRIP:
-            gl_mode = GL_TRIANGLE_STRIP;
-            break;
-
-        default:
-            break;
-    };
-
-    glInterleavedArrays(gl_vertex_type , 0, vertex_array);
-    glDrawArrays(gl_mode, 0, vertex_num); 
-
-#if 0
-    VERTEX_2D_COLOR *vtx = static_cast<VERTEX_2D_COLOR*>(vertex_array);
-    glBegin(gl_mode);
-    for (unsigned i = 0; i < vertex_num; i++) 
-    {
-        glVertex2f( vtx[i].x, vtx[i].y);
-        glColor4ub( vtx[i].r, vtx[i].g, vtx[i].b, vtx[i].a);    
-    }
-    glEnd();
-#endif
+    glDrawArrays(mode, 0, vertex_num); 
 }
 
 // --------------------------------------------------
@@ -194,25 +101,7 @@ void GraphicDeviceOpenGL::set_clear_color(float a, float r, float g, float b)
 
 void GraphicDeviceOpenGL::clear(RENDER_BUFFER render_buffer)
 {
-    GLbitfield bit_field = 0;
-    switch ( render_buffer ) 
-    {
-        case COLOR_BUFFER_BIT:
-            bit_field = GL_COLOR_BUFFER_BIT;
-            break;
-        case DEPTH_BUFFER_BIT:
-            bit_field = GL_DEPTH_BUFFER_BIT;
-            break;
-        case ACCUM_BUFFER_BIT:
-            bit_field = GL_ACCUM_BUFFER_BIT;
-            break;
-        case STENCIL_BUFFER_BIT:
-            bit_field = GL_STENCIL_BUFFER_BIT;
-            break;
-        default:
-            break;
-    }
-    glClear(bit_field);
+    glClear(render_buffer);
 }
 
 // --------------------------------------------------
@@ -229,7 +118,7 @@ void GraphicDeviceOpenGL::set_blend_enable(bool flg)
 
 void GraphicDeviceOpenGL::set_blend_mode(BLEND_MODE src, BLEND_MODE dst)
 {
-    glBlendFunc(trans_blend_mode_to_gl(src), trans_blend_mode_to_gl(dst));
+    glBlendFunc(src, dst);
 }
 
 #endif//RC_USE_OPENGL

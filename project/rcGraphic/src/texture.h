@@ -19,6 +19,7 @@ class Texture
 {
     public:
         struct Desc {
+            std::string info;
             u32 width, height;
             Desc() : width(), height() {}
         };

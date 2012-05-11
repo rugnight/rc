@@ -14,6 +14,10 @@ namespace math {
 class Vector3
 {
     public:
+        static const Vector3 ZERO;  // ゼロ
+        static const Vector3 UNIT;  // 単位
+
+    public:
         // -------------------------
         // constructor
         Vector3();
@@ -94,9 +98,7 @@ class Vector3
     public:
         union { 
             struct {
-                VECTOR3_TYPE x;
-                VECTOR3_TYPE y;
-                VECTOR3_TYPE z;
+                VECTOR3_TYPE x, y, z;
             };
             VECTOR3_TYPE v[3];
         };

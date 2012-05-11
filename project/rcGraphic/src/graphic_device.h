@@ -27,12 +27,6 @@ class GraphicDevice
         virtual ~GraphicDevice() {}
 
         // --------------------------------------------------
-        // 頂点型の設定
-        // --------------------------------------------------
-        void set_vertex_type(VERTEX_TYPE type) { m_vertex_type = type; }
-        u32 get_vertex_type() { return m_vertex_type; }
-
-        // --------------------------------------------------
         // モデルビュー設定
         // --------------------------------------------------
         virtual void set_transform_matrix(const Matrix4 &mat) = 0;
@@ -48,9 +42,14 @@ class GraphicDevice
         virtual void set_texture(Texture *p_tex) = 0;
 
         // --------------------------------------------------
+        // 描画設定
+        // --------------------------------------------------
+        virtual void set_vertex_array(VERTEX_TYPE type, void *vertex_array) = 0;
+
+        // --------------------------------------------------
         // 描画
         // --------------------------------------------------
-        virtual void draw_vertex_array(DRAW_MODE mode, u32 vertex_num, void *vertex_array) = 0;
+        virtual void draw_vertex_array(DRAW_MODE mode, u32 vertex_num) = 0;
 
         // --------------------------------------------------
         // 描画領域のクリア
@@ -78,11 +77,6 @@ class GraphicDeviceOpenGL : public GraphicDevice
         virtual ~GraphicDeviceOpenGL();
 
         // --------------------------------------------------
-        // 頂点型の設定
-        // --------------------------------------------------
-        virtual void set_vertex_type(VERTEX_TYPE type);
-
-        // --------------------------------------------------
         // モデルビュー設定
         // --------------------------------------------------
         virtual void set_transform_matrix(const Matrix4 &mat);
@@ -98,9 +92,14 @@ class GraphicDeviceOpenGL : public GraphicDevice
         virtual void set_texture(Texture *p_tex);
 
         // --------------------------------------------------
+        // 描画設定
+        // --------------------------------------------------
+        virtual void set_vertex_array(VERTEX_TYPE type, void *vertex_array);
+
+        // --------------------------------------------------
         // 描画
         // --------------------------------------------------
-        virtual void draw_vertex_array(DRAW_MODE mode, u32 vertex_num, void *vertex_array);
+        virtual void draw_vertex_array(DRAW_MODE mode, u32 vertex_num);
 
         // --------------------------------------------------
         // 描画領域のクリア

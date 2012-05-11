@@ -9,16 +9,22 @@ namespace rc {
 namespace math {
 
 // --------------------------------------------------
+// static var member
+// --------------------------------------------------
+const Vector4 Vector4::ZERO(0.0f, 0.0f, 0.0f, 0.0f);
+const Vector4 Vector4::UNIT(1.0f, 1.0f, 1.0f, 1.0f);
+
+// --------------------------------------------------
 // constructor
 // --------------------------------------------------
 Vector4::Vector4()
+: x(0.0f), y(0.0f), z(0.0f), w(0.0f)
 {
-    Vector4(0.0f, 0.0f, 0.0f, 0.0f);
 }
 
 Vector4::Vector4(VECTOR4_TYPE _n)
+: x(_n), y(_n), z(_n), w(_n)
 {
-    Vector4(_n, _n, _n, _n);
 }
 
 Vector4::Vector4(VECTOR4_TYPE _x, VECTOR4_TYPE _y, VECTOR4_TYPE _z, VECTOR4_TYPE _w)
@@ -27,8 +33,8 @@ Vector4::Vector4(VECTOR4_TYPE _x, VECTOR4_TYPE _y, VECTOR4_TYPE _z, VECTOR4_TYPE
 }
 
 Vector4::Vector4(const Vector4 &src)
+: x(src.x), y(src.y), z(src.z), w(src.w)
 {
-    Vector4(src.x, src.y, src.z, src.w);
 }
 
 // --------------------------------------------------

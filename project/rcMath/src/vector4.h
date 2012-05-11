@@ -14,6 +14,9 @@ namespace math {
 class Vector4
 {
     public:
+        static const Vector4 ZERO;  // ゼロ
+        static const Vector4 UNIT;  // 単位
+    public:
         // -------------------------
         // constructor
         Vector4();

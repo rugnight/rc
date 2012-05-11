@@ -8,11 +8,18 @@
 
 #include "rcMathBase.h"
 
+#include "vector3.h"
+#include "vector4.h"
+
 namespace rc {
 namespace math {
 
 class Vector2
 {
+    public:
+        static const Vector2 ZERO;  // ゼロ
+        static const Vector2 UNIT;  // 単位
+
     public:
         // -------------------------
         // constructor
@@ -20,6 +27,8 @@ class Vector2
         Vector2(VECTOR2_TYPE _n);
         Vector2(VECTOR2_TYPE _x, VECTOR2_TYPE _y);
         Vector2(const Vector2 &src);
+        Vector2(const Vector3 &src);
+        Vector2(const Vector4 &src);
 
         // -------------------------
         // destructor

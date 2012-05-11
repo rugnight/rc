@@ -9,4 +9,8 @@
 #include "rc_base.h"
 #include "rcMathTypes.h"
 
+#include <math.h>
+
+using namespace rc::math;
+
 #endif//_RC_MATH_BASE_H_

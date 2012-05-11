@@ -13,32 +13,22 @@ namespace graphic {
 
 // 定義済みの頂点型
 typedef enum vertex_type {
-    VERTEX_TYPE_2D,
-    VERTEX_TYPE_2D_COLOR,
-
-    VERTEX_TYPE_T2F_V3F,
-    VERTEX_TYPE_T2F_C4UB_V3F,
+    VERTEX_TYPE_C4UB_V3F     = GL_C4UB_V3F,
+    VERTEX_TYPE_T2F_V3F      = GL_T2F_V3F,
+    VERTEX_TYPE_T2F_C4UB_V3F = GL_T2F_C4UB_V3F,
 }VERTEX_TYPE;
 
-// VERTEX_TYPE_2D,
-typedef struct vertex_2d{
-    union {
-        f32 v[2];
-        struct { f32 x, y; };
-    };
-} VERTEX_2D;
-
-// VERTEX_TYPE_2D_COLOR,
-typedef struct vertex_2d_color {
+// VERTEX_TYPE_C4UB_V3F     
+typedef struct vertex_c4ub_v3f {
     union {
         u32 color;
         struct { u8 a, b, g, r; };
     };
     union {
-        f32 v[2];
-        struct { f32 x, y; };
+        f32 va[3];
+        struct { f32 x, y, z; };
     };
-} VERTEX_2D_COLOR;
+} VERTEX_C4UB_V3F;
 
 // VERTEX_T2F_V3F
 typedef struct vertex_t2f_v3f {
