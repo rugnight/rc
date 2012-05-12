@@ -17,5 +17,15 @@ int toPow2(int x)
     return y;
 }
 
+bool is_float_zero(f32 value)
+{
+    return is_float_equal(0.0f, value);
+}
+
+bool is_float_equal(f32 value0, f32 value1)
+{
+    return ( fabs(value0-value1) < __FLT_EPSILON__);
+}
+
 } //namespace math
 } //namespace rc

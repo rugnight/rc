@@ -4,6 +4,7 @@
  */
 
 #include "matrix4.h"
+#include "util_math.h"
 #include <string.h>
 
 namespace rc {
@@ -23,7 +24,7 @@ static MATRIX4_TYPE mul_row_column(const Matrix4 &src0, const u32 &row, const Ma
          + src0.v[r+3] * src1.v[col+12];
 }
 
-inline static double CalDetMat4x4(const MATRIX4_TYPE* m)
+inline static f32 CalDetMat4x4(const MATRIX4_TYPE* m)
 {
     return m[0]*m[5]*m[10]*m[15]+m[0]*m[6]*m[11]*m[13]+m[0]*m[7]*m[9]*m[14]
           +m[1]*m[4]*m[11]*m[14]+m[1]*m[6]*m[8]*m[15]+m[1]*m[7]*m[10]*m[12]
@@ -146,62 +147,58 @@ void Matrix4::mul(Matrix4 *dst, const Matrix4 &src0, const Matrix4 &src1)
 
 void Matrix4::inverse(Matrix4 *dst, const Matrix4 &src)
 {
-    Matrix4 invm;
-#if 0
-    tmp[0] = src[1][1]*(src[2][2]*src[3][3] - src[2][3]*src[3][2]) + src[1][2]*(src[2][3]*src[3][1] - src[2][1]*src[3][3]) + src[1][3]*(src[2][1]*src[3][2] - src[2][2]*src[3][1]);
-    tmp[1] = src[2][1]*(src[3][2]*src[0][3] - src[3][3]*src[0][2]) + src[2][2]*(src[3][3]*src[0][1] - src[3][1]*src[0][3]) + src[2][3]*(src[3][1]*src[0][2] - src[3][2]*src[0][1]);
-    tmp[2] = src[3][1]*(src[0][2]*src[1][3] - src[0][3]*src[1][2]) + src[3][2]*(src[0][3]*src[1][1] - src[0][1]*src[1][3]) + src[3][3]*(src[0][1]*src[1][2] - src[0][2]*src[1][1]);
-    tmp[3] = src[0][1]*(src[1][2]*src[2][3] - src[1][3]*src[2][2]) + src[0][2]*(src[1][3]*src[2][1] - src[1][1]*src[2][3]) + src[0][3]*(src[1][1]*src[2][2] - src[1][2]*src[2][1]);
-    tmp[4] = src[1][2]*(src[2][3]*src[3][0] - src[2][0]*src[3][3]) + src[1][3]*(src[2][0]*src[3][2] - src[2][2]*src[3][0]) + src[1][0]*(src[2][2]*src[3][3] - src[2][3]*src[3][2]);
-    tmp[5] = src[2][2]*(src[3][3]*src[0][0] - src[3][0]*src[0][3]) + src[2][3]*(src[3][0]*src[0][2] - src[3][2]*src[0][0]) + src[2][0]*(src[2][2]*src[3][3] - src[2][3]*src[3][2]);
-    tmp[6] = 
-    tmp[7] = 
-    tmp[8] = 
-    tmp[9] = 
-    tmp[10] = 
-    tmp[11] = 
-    tmp[12] = 
-    tmp[13] = 
-    tmp[14] = 
-    tmp[15] = 
-#else
-    double det = CalDetMat4x4(src.v);
-    if(fabs(det) <= 0.000001f ){
-        return false;
+    f32 det = CalDetMat4x4(src.v);
+    if( is_float_zero(det) ){
+        return ;
     }
     else{
         double inv_det = 1.0/det;
  
-        invm.v[0]  = inv_det*(src.v[5]*src.v[10]*src.v[15]+src.v[6]*src.v[11]*src.v[13]+src.v[7]*src.v[9]*src.v[14]-src.v[5]*src.v[11]*src.v[14]-src.v[6]*src.v[9]*src.v[15]-src.v[7]*src.v[10]*src.v[13]);
-        invm.v[1]  = inv_det*(src.v[1]*src.v[11]*src.v[14]+src.v[2]*src.v[9]*src.v[15]+src.v[3]*src.v[10]*src.v[13]-src.v[1]*src.v[10]*src.v[15]-src.v[2]*src.v[11]*src.v[13]-src.v[3]*src.v[9]*src.v[14]);
-        invm.v[2]  = inv_det*(src.v[1]*src.v[6]*src.v[15]+src.v[2]*src.v[7]*src.v[13]+src.v[3]*src.v[5]*src.v[14]-src.v[1]*src.v[7]*src.v[14]-src.v[2]*src.v[5]*src.v[15]-src.v[3]*src.v[6]*src.v[13]);
-        invm.v[3]  = inv_det*(src.v[1]*src.v[7]*src.v[10]+src.v[2]*src.v[5]*src.v[11]+src.v[3]*src.v[6]*src.v[9]-src.v[1]*src.v[6]*src.v[11]-src.v[2]*src.v[7]*src.v[9]-src.v[3]*src.v[5]*src.v[10]);
- 
-        invm.v[4]  = inv_det*(src.v[4]*src.v[11]*src.v[14]+src.v[6]*src.v[8]*src.v[15]+src.v[7]*src.v[10]*src.v[12]-src.v[4]*src.v[10]*src.v[15]-src.v[6]*src.v[11]*src.v[12]-src.v[7]*src.v[8]*src.v[14]);
-        invm.v[5]  = inv_det*(src.v[0]*src.v[10]*src.v[15]+src.v[2]*src.v[11]*src.v[12]+src.v[3]*src.v[8]*src.v[14]-src.v[0]*src.v[11]*src.v[14]-src.v[2]*src.v[8]*src.v[15]-src.v[3]*src.v[10]*src.v[12]);
-        invm.v[6]  = inv_det*(src.v[0]*src.v[7]*src.v[14]+src.v[2]*src.v[4]*src.v[15]+src.v[3]*src.v[6]*src.v[12]-src.v[0]*src.v[6]*src.v[15]-src.v[2]*src.v[7]*src.v[12]-src.v[3]*src.v[4]*src.v[14]);
-        invm.v[7]  = inv_det*(src.v[0]*src.v[6]*src.v[11]+src.v[2]*src.v[7]*src.v[8]+src.v[3]*src.v[4]*src.v[10]-src.v[0]*src.v[7]*src.v[10]-src.v[2]*src.v[4]*src.v[11]-src.v[3]*src.v[6]*src.v[8]);
- 
-        invm.v[8]  = inv_det*(src.v[4]*src.v[9]*src.v[15]+src.v[5]*src.v[11]*src.v[12]+src.v[7]*src.v[8]*src.v[13]-src.v[4]*src.v[11]*src.v[13]-src.v[5]*src.v[8]*src.v[15]-src.v[7]*src.v[9]*src.v[12]);
-        invm.v[9]  = inv_det*(src.v[0]*src.v[11]*src.v[13]+src.v[1]*src.v[8]*src.v[15]+src.v[3]*src.v[9]*src.v[12]-src.v[0]*src.v[9]*src.v[15]-src.v[1]*src.v[11]*src.v[12]-src.v[3]*src.v[8]*src.v[13]);
-        invm.v[10] = inv_det*(src.v[0]*src.v[5]*src.v[15]+src.v[1]*src.v[7]*src.v[12]+src.v[3]*src.v[4]*src.v[13]-src.v[0]*src.v[7]*src.v[13]-src.v[1]*src.v[4]*src.v[15]-src.v[3]*src.v[5]*src.v[12]);
-        invm.v[11] = inv_det*(src.v[0]*src.v[7]*src.v[9]+src.v[1]*src.v[4]*src.v[11]+src.v[3]*src.v[5]*src.v[8]-src.v[0]*src.v[5]*src.v[11]-src.v[1]*src.v[7]*src.v[8]-src.v[3]*src.v[4]*src.v[9]);
- 
-        invm.v[12] = inv_det*(src.v[4]*src.v[10]*src.v[13]+src.v[5]*src.v[8]*src.v[14]+src.v[6]*src.v[9]*src.v[12]-src.v[4]*src.v[9]*src.v[14]-src.v[5]*src.v[10]*src.v[12]-src.v[6]*src.v[8]*src.v[13]);
-        invm.v[13] = inv_det*(src.v[0]*src.v[9]*src.v[14]+src.v[1]*src.v[10]*src.v[12]+src.v[2]*src.v[8]*src.v[13]-src.v[0]*src.v[10]*src.v[13]-src.v[1]*src.v[8]*src.v[14]-src.v[2]*src.v[9]*src.v[12]);
-        invm.v[14] = inv_det*(src.v[0]*src.v[6]*src.v[13]+src.v[1]*src.v[4]*src.v[14]+src.v[2]*src.v[5]*src.v[12]-src.v[0]*src.v[5]*src.v[14]-src.v[1]*src.v[6]*src.v[12]-src.v[2]*src.v[4]*src.v[13]);
-        invm.v[15] = inv_det*(src.v[0]*src.v[5]*src.v[10]+src.v[1]*src.v[6]*src.v[8]+src.v[2]*src.v[4]*src.v[9]-src.v[0]*src.v[6]*src.v[9]-src.v[1]*src.v[4]*src.v[10]-src.v[2]*src.v[5]*src.v[8]);
+        dst->v[0]  = inv_det*(src.v[5]*src.v[10]*src.v[15]+src.v[6]*src.v[11]*src.v[13]+src.v[7]*src.v[9]*src.v[14]
+                        -src.v[5]*src.v[11]*src.v[14]-src.v[6]*src.v[9]*src.v[15]-src.v[7]*src.v[10]*src.v[13]);
+        dst->v[1]  = inv_det*(src.v[1]*src.v[11]*src.v[14]+src.v[2]*src.v[9]*src.v[15]+src.v[3]*src.v[10]*src.v[13]
+                        -src.v[1]*src.v[10]*src.v[15]-src.v[2]*src.v[11]*src.v[13]-src.v[3]*src.v[9]*src.v[14]);
+        dst->v[2]  = inv_det*(src.v[1]*src.v[6]*src.v[15]+src.v[2]*src.v[7]*src.v[13]+src.v[3]*src.v[5]*src.v[14]
+                        -src.v[1]*src.v[7]*src.v[14]-src.v[2]*src.v[5]*src.v[15]-src.v[3]*src.v[6]*src.v[13]);
+        dst->v[3]  = inv_det*(src.v[1]*src.v[7]*src.v[10]+src.v[2]*src.v[5]*src.v[11]+src.v[3]*src.v[6]*src.v[9]
+                        -src.v[1]*src.v[6]*src.v[11]-src.v[2]*src.v[7]*src.v[9]-src.v[3]*src.v[5]*src.v[10]);
+        dst->v[4]  = inv_det*(src.v[4]*src.v[11]*src.v[14]+src.v[6]*src.v[8]*src.v[15]+src.v[7]*src.v[10]*src.v[12]
+                        -src.v[4]*src.v[10]*src.v[15]-src.v[6]*src.v[11]*src.v[12]-src.v[7]*src.v[8]*src.v[14]);
+        dst->v[5]  = inv_det*(src.v[0]*src.v[10]*src.v[15]+src.v[2]*src.v[11]*src.v[12]+src.v[3]*src.v[8]*src.v[14]
+                        -src.v[0]*src.v[11]*src.v[14]-src.v[2]*src.v[8]*src.v[15]-src.v[3]*src.v[10]*src.v[12]);
+        dst->v[6]  = inv_det*(src.v[0]*src.v[7]*src.v[14]+src.v[2]*src.v[4]*src.v[15]+src.v[3]*src.v[6]*src.v[12]
+                        -src.v[0]*src.v[6]*src.v[15]-src.v[2]*src.v[7]*src.v[12]-src.v[3]*src.v[4]*src.v[14]);
+        dst->v[7]  = inv_det*(src.v[0]*src.v[6]*src.v[11]+src.v[2]*src.v[7]*src.v[8]+src.v[3]*src.v[4]*src.v[10]
+                        -src.v[0]*src.v[7]*src.v[10]-src.v[2]*src.v[4]*src.v[11]-src.v[3]*src.v[6]*src.v[8]);
+        dst->v[8]  = inv_det*(src.v[4]*src.v[9]*src.v[15]+src.v[5]*src.v[11]*src.v[12]+src.v[7]*src.v[8]*src.v[13]
+                        -src.v[4]*src.v[11]*src.v[13]-src.v[5]*src.v[8]*src.v[15]-src.v[7]*src.v[9]*src.v[12]);
+        dst->v[9]  = inv_det*(src.v[0]*src.v[11]*src.v[13]+src.v[1]*src.v[8]*src.v[15]+src.v[3]*src.v[9]*src.v[12]
+                        -src.v[0]*src.v[9]*src.v[15]-src.v[1]*src.v[11]*src.v[12]-src.v[3]*src.v[8]*src.v[13]);
+        dst->v[10] = inv_det*(src.v[0]*src.v[5]*src.v[15]+src.v[1]*src.v[7]*src.v[12]+src.v[3]*src.v[4]*src.v[13]
+                        -src.v[0]*src.v[7]*src.v[13]-src.v[1]*src.v[4]*src.v[15]-src.v[3]*src.v[5]*src.v[12]);
+        dst->v[11] = inv_det*(src.v[0]*src.v[7]*src.v[9]+src.v[1]*src.v[4]*src.v[11]+src.v[3]*src.v[5]*src.v[8]
+                        -src.v[0]*src.v[5]*src.v[11]-src.v[1]*src.v[7]*src.v[8]-src.v[3]*src.v[4]*src.v[9]);
+        dst->v[12] = inv_det*(src.v[4]*src.v[10]*src.v[13]+src.v[5]*src.v[8]*src.v[14]+src.v[6]*src.v[9]*src.v[12]
+                        -src.v[4]*src.v[9]*src.v[14]-src.v[5]*src.v[10]*src.v[12]-src.v[6]*src.v[8]*src.v[13]);
+        dst->v[13] = inv_det*(src.v[0]*src.v[9]*src.v[14]+src.v[1]*src.v[10]*src.v[12]+src.v[2]*src.v[8]*src.v[13]
+                        -src.v[0]*src.v[10]*src.v[13]-src.v[1]*src.v[8]*src.v[14]-src.v[2]*src.v[9]*src.v[12]);
+        dst->v[14] = inv_det*(src.v[0]*src.v[6]*src.v[13]+src.v[1]*src.v[4]*src.v[14]+src.v[2]*src.v[5]*src.v[12]
+                        -src.v[0]*src.v[5]*src.v[14]-src.v[1]*src.v[6]*src.v[12]-src.v[2]*src.v[4]*src.v[13]);
+        dst->v[15] = inv_det*(src.v[0]*src.v[5]*src.v[10]+src.v[1]*src.v[6]*src.v[8]+src.v[2]*src.v[4]*src.v[9]
+                        -src.v[0]*src.v[6]*src.v[9]-src.v[1]*src.v[4]*src.v[10]-src.v[2]*src.v[5]*src.v[8]);
     }
-#endif
-	Matrix4::copy(dst, invm);
 }
 
 
 void Matrix4::copy(Matrix4 *dst, const Matrix4 &src)
 {
+#if 1
+    memcpy(dst, &src, sizeof(MATRIX4_TYPE) * MATRIX4_ELEM_NUM);
+#else
     for (u32 i = 0; i < MATRIX4_ELEM_NUM; ++i ) {
         dst->v[i] = src.v[i];
     }
+#endif
 }
 
 

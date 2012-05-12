@@ -8,13 +8,13 @@
 #define _RC_SPRITE_FONT_H_
 
 #include "rcGameBase.h"
-#include "sprite_base.h"
+#include "sprite.h"
 
 namespace rc {
 namespace game {
 
 /* -------------------------------------------------- */
-class SpriteFont : public SpriteBase
+class SpriteFont : public Sprite
 /* -------------------------------------------------- */
 {
 	public:

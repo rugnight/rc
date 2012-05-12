@@ -30,16 +30,16 @@ SpriteFont::~SpriteFont()
 
 void SpriteFont::destroy()
 {
-	if ( SpriteBase::get_texture() ) {
-		m_p_tex_man->release( SpriteBase::get_texture() );
-		SpriteBase::set_texture(NULL);
+	if ( Sprite::get_texture() ) {
+		m_p_tex_man->release( Sprite::get_texture() );
+		Sprite::set_texture(NULL);
 	}
 }
 
 void SpriteFont::create(const char* string, const char* font_name, u32 font_size)
 {
 	destroy();
-	SpriteBase::set_texture( m_p_tex_man->create(string, font_name, font_size) );
+	Sprite::set_texture( m_p_tex_man->create(string, font_name, font_size) );
 }
 
 } //rc 
