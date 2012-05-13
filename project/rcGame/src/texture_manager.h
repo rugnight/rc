@@ -9,6 +9,9 @@
 
 #include "texture.h"
 
+namespace rc {
+namespace game {
+
 /* -------------------------------------------------- */
 class TextureManager
 /* -------------------------------------------------- */
@@ -39,5 +42,8 @@ class TextureManager
 	private:
 		TEX_MAP m_map;
 };
+
+} // namespace rc
+} // namespace game
 
 #endif//_RC_TEXTURE_MANAGER_H_

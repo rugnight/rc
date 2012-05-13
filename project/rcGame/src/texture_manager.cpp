@@ -9,6 +9,9 @@
 
 using namespace rc::graphic;
 
+namespace rc {
+namespace game {
+
 /* -------------------------------------------------- */
 //	class TextureManager
 /* -------------------------------------------------- */
@@ -95,3 +98,5 @@ void TextureManager::release(Texture* p_tex)
 	}
 }
 
+} // namespace rc
+} // namespace game

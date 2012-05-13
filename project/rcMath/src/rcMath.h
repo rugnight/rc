@@ -13,5 +13,6 @@
 #include "vector4.h"
 #include "matrix4.h"
 #include "trigonometric.h"
+#include "util_math.h"
 
 #endif//_RC_MATH_H_

@@ -112,7 +112,7 @@ void Transform::update()
 
 const Matrix4& Transform::get_matrix()
 {
-	this->update();
+	update();
 	return m_transform;
 }
 

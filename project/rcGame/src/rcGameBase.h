@@ -11,6 +11,8 @@
 #include "rcMath.h"
 #include "rcGraphic.h"
 
+#include "rcGameTypes.h"
+
 using namespace rc::math;
 using namespace rc::graphic;
 

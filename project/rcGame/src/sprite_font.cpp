@@ -8,7 +8,7 @@
 
 namespace {
 	// 特に指定がなければこのマネージャを使う
-	static TextureManager default_texture_man;
+	static rc::game::TextureManager default_texture_man;
 };
 
 namespace rc {

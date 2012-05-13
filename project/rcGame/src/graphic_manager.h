@@ -9,10 +9,11 @@
 
 #include "graphic_device.h"
 
-class rc::graphic::GraphicDevice;
+using rc::graphic::GraphicDevice;
 
 namespace rc {
 namespace game {
+
 
 /* ---------------------------------------------------------------------- */
 class GraphicManager
@@ -29,12 +30,12 @@ class GraphicManager
 			return m_instance;
 		}
 
-		void init(rc::graphic::GraphicDevice* p_device);
+		void init(GraphicDevice* p_device);
 		void term();
-		rc::graphic::GraphicDevice* get_device();
+		GraphicDevice* get_device();
 
 	private:
-		rc::graphic::GraphicDevice *m_p_device;
+		GraphicDevice *m_p_device;
 };
 
 } //rc 

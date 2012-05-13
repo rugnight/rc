@@ -16,7 +16,7 @@
 
 #include <string>
 #include <map>
-
+#include <list>
 
 // --------------------------
 // 型の定義
