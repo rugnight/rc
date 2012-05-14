@@ -19,6 +19,11 @@ class GameObject
 /* -------------------------------------------------- */
 {
 public:
+    typedef std::pair<GAME_COMPONENT_TYPE, GameComponent*>      COMPONENT_PAIR;
+    typedef std::multimap<GAME_COMPONENT_TYPE, GameComponent*>  COMPONENT_MAP;
+    typedef COMPONENT_MAP::iterator                             COMPONENT_IT;
+
+public:
     GameObject();
     virtual ~GameObject();
 
@@ -28,11 +33,15 @@ public:
     bool is_hold(GAME_COMPONENT_TYPE type);
     GameComponent* get_component(GAME_COMPONENT_TYPE type);
 
+    u32 get_component_num(GAME_COMPONENT_TYPE type);
+    COMPONENT_IT get_component_iterator(GAME_COMPONENT_TYPE type);
+
     // ゲームコンポーネントの更新
     virtual void update() {}
 
 private:
-    GameComponent *m_pa_component[GC_NUM];
+    COMPONENT_MAP   m_map;
+    //GameComponent *m_pa_component[GC_NUM];
 };
 
 } // namespace rc

@@ -17,6 +17,8 @@ Sprite::Sprite()
 	: m_p_tex(NULL)
 	, m_color(0xffffffff)
 {
+    m_uv = Vector3::UNIT;
+    m_wh = Vector3(100.0f, 100.0f, 0.0f);
     m_center = Vector3::ZERO;
 }
 
@@ -27,6 +29,11 @@ Sprite::~Sprite()
 void Sprite::set_texture(Texture *p_tex)
 {
 	m_p_tex = p_tex;
+    if ( !m_p_tex ) {
+        return;
+    }
+
+    set_wh( m_p_tex->get_desc().width, m_p_tex->get_desc().height);
     set_center(m_center.x, m_center.y);
 }
 
@@ -38,8 +45,8 @@ void Sprite::draw()
 
 	Texture* tex = m_p_tex;
 
-    const float w = tex->get_desc().width;
-    const float h = tex->get_desc().height;
+    const float w = m_wh.x;//tex->get_desc().width;
+    const float h = m_wh.y;//tex->get_desc().height;
 
     const float x = w;//tex->get_desc().width  * get_scale().x;
     const float y = h;//tex->get_desc().height * get_scale().y;

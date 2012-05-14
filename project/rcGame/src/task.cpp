@@ -101,44 +101,49 @@ void TaskSprite::update()
 {
     for ( LIST_IT it = m_list.begin(); it != m_list.end(); ++it ) 
     {
-#if 0
-        GameComponentSprite *p_component = static_cast<GameComponentSprite*>((*it));
-#else
 		GameObject* p_obj = (*it);
-        if ( !p_obj->is_hold(GC_SPRITE) ) {
-			continue;
-		}
+        const u32 num = p_obj->get_component_num(GC_SPRITE);
+        if ( num <= 0 ) {
+            continue;
+        }
 
-        GameComponentSprite *p_component = static_cast<GameComponentSprite*>(p_obj->get_component(GC_SPRITE));
-#endif
-        
-        Sprite* p_sprite = p_component->get_sprite();
-        Texture* p_tex = p_sprite->get_texture();
+        GameObject::COMPONENT_IT component_it = p_obj->get_component_iterator(GC_SPRITE);
+        for ( int i = 0; i < num; ++i ) {
+            GameComponentSprite *p_component = static_cast<GameComponentSprite*>((*component_it ).second);
+            Sprite* p_sprite = p_component->get_sprite();
+            Texture* p_tex = p_sprite->get_texture();
 
-        const float w = p_tex->get_desc().width;
-        const float h = p_tex->get_desc().height;
+            if ( !p_tex ) {
+                continue;
+            }
 
-        const float x = w;
-        const float y = h;
+            const float x = p_sprite->get_wh().x;//p_tex->get_desc().width;
+            const float y = p_sprite->get_wh().y;//p_tex->get_desc().height;
 
-        const u32 color = p_sprite->get_color();
-        
-        VERTEX_T2F_C4UB_V3F vertices[] = {
-            { 0.0f , 0.0f , color, 0.0 , 0.0 , 0.0 }, 
-            { w    , 0.0f , color, x   , 0.0 , 0.0 }, 
-            { w    , h    , color, x   , y   , 0.0 }, 
+            const float w = x * p_sprite->get_uv().x;//p_tex->get_desc().width;
+            const float h = y * p_sprite->get_uv().y;//p_tex->get_desc().height;
+
+            const u32 color = p_sprite->get_color();
             
-            { 0.0f , 0.0f , color, 0.0 , 0.0 , 0.0 }, 
-            { w    , h    , color, x   , y   , 0.0 }, 
-            { 0.0f , h    , color, 0.0 , y   , 0.0 },         
-        }; 
+            VERTEX_T2F_C4UB_V3F vertices[] = {
+                { 0.0f , 0.0f , color, 0.0 , 0.0 , 0.0 }, 
+                { w    , 0.0f , color, x   , 0.0 , 0.0 }, 
+                { w    , h    , color, x   , y   , 0.0 }, 
+                
+                { 0.0f , 0.0f , color, 0.0 , 0.0 , 0.0 }, 
+                { w    , h    , color, x   , y   , 0.0 }, 
+                { 0.0f , h    , color, 0.0 , y   , 0.0 },         
+            }; 
 
-        GraphicDevice *p_device = GraphicManager::Instance().get_device();
+            GraphicDevice *p_device = GraphicManager::Instance().get_device();
 
-        p_device->set_transform_matrix(p_sprite->get_transform().get_matrix());
-        p_device->set_texture(p_tex);
-        p_device->set_vertex_array(VERTEX_TYPE_T2F_C4UB_V3F, vertices);
-        p_device->draw_vertex_array(DRAW_MODE_TRIANGLES, 6);
+            p_device->set_transform_matrix(p_sprite->get_transform().get_matrix());
+            p_device->set_texture(p_tex);
+            p_device->set_vertex_array(VERTEX_TYPE_T2F_C4UB_V3F, vertices);
+            p_device->draw_vertex_array(DRAW_MODE_TRIANGLES, 6);
+
+            ++component_it;
+        }
     }
 }
 

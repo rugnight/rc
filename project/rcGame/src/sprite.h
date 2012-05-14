@@ -36,10 +36,14 @@ class Sprite
 		void set_scale(f32 x, f32 y)         { get_transform().set_scale(x, y, 1.0f); }
 		void set_scale(const Vector3& scale) { get_transform().set_scale(scale); }
 		void set_center(f32 x, f32 y);
+        void set_uv(f32 u, f32 v)            { m_uv.x = u; m_uv.y = v; }
+        void set_wh(f32 w, f32 h)            { m_wh.x = w; m_wh.y = h; }
 		Vector3 get_pos()          { return get_transform().get_pos(); }
 		Vector3 get_rot()          { return get_transform().get_rot(); }
 		Vector3 get_scale()        { return get_transform().get_scale(); }
 		Vector3 get_center()       { return m_center; }
+        Vector3 get_uv()           { return m_uv; }
+        Vector3 get_wh()           { return m_wh; }
 
 		Transform2D& get_transform() { return m_transform; }
 
@@ -51,6 +55,8 @@ class Sprite
 		Texture		*m_p_tex;
 		Transform2D	m_transform;
 
+        Vector3     m_wh;
+        Vector3     m_uv;
 		u32			m_color;
 
 		bool		m_is_centering;
