@@ -65,8 +65,7 @@ void Sprite::set_center(f32 x, f32 y)
 	}
     m_center.x = x;
     m_center.y = y;
-    m_transform.set_center( (m_p_tex->get_desc().width  * m_center.x),
-                            (m_p_tex->get_desc().height * m_center.y) );
+    m_transform.set_center( (m_wh.x * m_center.x), (m_wh.y * m_center.y) );
 }
 
 } //rc 

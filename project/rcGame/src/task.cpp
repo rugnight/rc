@@ -120,8 +120,10 @@ void TaskSprite::update()
             const float x = p_sprite->get_wh().x;//p_tex->get_desc().width;
             const float y = p_sprite->get_wh().y;//p_tex->get_desc().height;
 
-            const float w = 1.0f;//x * p_sprite->get_uv().x;//p_tex->get_desc().width;
-            const float h = 1.0f;//y * p_sprite->get_uv().y;//p_tex->get_desc().height;
+            const float w = p_sprite->get_uv().x;//p_tex->get_desc().width;
+            const float h = p_sprite->get_uv().y;//p_tex->get_desc().height;
+
+			printf("xy: %.1f %.1f wh: %.1f %.1f\n", x, y, w, h);
 
             const u32 color = p_sprite->get_color();
             

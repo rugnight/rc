@@ -34,10 +34,14 @@ class TextureManager
 		TextureManager();
 		virtual ~TextureManager();
 
+		Texture* create(ISurface *p_surface, const char *key);
 		Texture* create(const char *file_path);
 		Texture* create(const char *string, const char *font_name, u32 font_size);
 
 		void release(Texture* p_tex);
+
+		Texture* get_texture(const char *key);
+		void add_texture(Texture *p_tex, const char *key);
 
 	private:
 		TEX_MAP m_map;

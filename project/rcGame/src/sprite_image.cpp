@@ -26,7 +26,26 @@ SpriteImage::~SpriteImage()
 void SpriteImage::create(const char *file_path)
 {
 	Sprite::release_texture();
-	Sprite::set_texture( m_p_tex_man->create(file_path) );
+
+	// サーフェイスを作成
+	SurfaceSDL surface;
+	bool success = surface.create_from_file(file_path);
+	if ( !success ) {
+		printf("failed create sprite image\n");
+		return ;
+	}
+
+	// テクスチャを作成してセット
+	Texture *p_tex = m_p_tex_man->create(static_cast<ISurface*>(&surface), file_path);
+	Sprite::set_texture( p_tex );
+    
+    const f32 sprite_w = surface.get_width();
+    const f32 sprite_h = surface.get_height();
+	this->set_wh(sprite_w, sprite_h);
+
+	const f32 u = sprite_w / static_cast<float>(p_tex->get_desc().width);
+	const f32 v = sprite_h / static_cast<float>(p_tex->get_desc().height);
+	this->set_uv(u, v);
 }
 
 } //rc 

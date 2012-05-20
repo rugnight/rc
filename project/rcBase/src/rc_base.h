@@ -19,6 +19,7 @@
 #ifdef RC_USE_SDL
 #include <SDL/SDL.h>
 #include <SDL_image/SDL_image.h>
+#include <SDL_ttf/SDL_ttf.h>
 #endif//RC_USE_SDL
 
 #include <assert.h>

@@ -26,7 +26,7 @@ bool SurfaceSDL::create_from_file(const char* file_path)
 
     m_p_surface = IMG_Load(file_path);
     if (!m_p_surface ) {
-        fprintf(stderr, "%sを読み込めませんでした: %s\n", SDL_GetError());
+        fprintf(stderr, "%sを読み込めませんでした\n", file_path);
         return false;
     }
 	return true;

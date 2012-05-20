@@ -7,10 +7,7 @@
 #ifndef _RC_FONT_H_
 #define _RC_FONT_H_
 
-#include "rcGraphicBase.h"
-
-
-
+#include "rc_base.h"
 
 
 

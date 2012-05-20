@@ -39,6 +39,7 @@ class Texture
         // テクスチャ生成
         virtual void create_from_file(const char* path) = 0;
         virtual void create_from_font(const char *str, const char *font_name, u32 font_size) = 0;
+		virtual bool create_from_surface(ISurface *p_surface) = 0;
 
     protected:
         Desc    m_desc;
@@ -62,6 +63,7 @@ public:
     // テクスチャ生成
     virtual void create_from_file(const char* path);
     virtual void create_from_font(const char *str, const char *font_name, u32 font_size);
+	virtual bool create_from_surface(ISurface *p_surface);
 
 private:
     GLuint m_tex_name;

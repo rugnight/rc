@@ -47,6 +47,10 @@ public:
 
 	SDL_Surface* get_surface_sdl() { return m_p_surface; }
 
+#if 1
+	void set_surface_sdl(SDL_Surface* p_surface) { destroy(); m_p_surface = p_surface; }
+#endif
+
 private:
 	SDL_Surface *m_p_surface;
 };
