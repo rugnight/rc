@@ -9,11 +9,6 @@
 using namespace rc::math;
 using namespace rc::graphic;
 
-namespace {
-	// 特に指定がなければこのマネージャを使う
-	static rc::game::TextureManager default_texture_man;
-};
-
 namespace rc {
 namespace game {
 
@@ -21,26 +16,16 @@ namespace game {
 //	class SpriteImage 
 /* ------------------------------ */
 SpriteImage::SpriteImage()
-	: m_p_tex_man(&default_texture_man)
 {
 }
 
 SpriteImage::~SpriteImage()
 {
-	destroy();
-}
-
-void SpriteImage::destroy()
-{
-	if ( Sprite::get_texture() ) {
-		m_p_tex_man->release( Sprite::get_texture() );
-		Sprite::set_texture(NULL);
-	}
 }
 
 void SpriteImage::create(const char *file_path)
 {
-	destroy();
+	Sprite::release_texture();
 	Sprite::set_texture( m_p_tex_man->create(file_path) );
 }
 

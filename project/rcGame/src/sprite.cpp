@@ -7,6 +7,11 @@
 #include "sprite_image.h"
 #include "graphic_manager.h"
 
+namespace {
+	// 特に指定がなければこのマネージャを使う
+	static rc::game::TextureManager default_texture_man;
+};
+
 namespace rc {
 namespace game {
 
@@ -16,6 +21,7 @@ namespace game {
 Sprite::Sprite()
 	: m_p_tex(NULL)
 	, m_color(0xffffffff)
+	, m_p_tex_man(&default_texture_man)
 {
     m_uv = Vector3::UNIT;
     m_wh = Vector3(100.0f, 100.0f, 0.0f);
@@ -24,6 +30,7 @@ Sprite::Sprite()
 
 Sprite::~Sprite()
 {
+	release_texture();
 }
 
 void Sprite::set_texture(Texture *p_tex)
@@ -37,36 +44,12 @@ void Sprite::set_texture(Texture *p_tex)
     set_center(m_center.x, m_center.y);
 }
 
-void Sprite::draw()
+void Sprite::release_texture()
 {
-	if ( !m_p_tex ) {
-		return;
+	if ( m_p_tex ) {
+		m_p_tex_man->release( m_p_tex );
+		m_p_tex = NULL;
 	}
-
-	Texture* tex = m_p_tex;
-
-    const float w = m_wh.x;//tex->get_desc().width;
-    const float h = m_wh.y;//tex->get_desc().height;
-
-    const float x = w;//tex->get_desc().width  * get_scale().x;
-    const float y = h;//tex->get_desc().height * get_scale().y;
-
-    VERTEX_T2F_C4UB_V3F vertices[] = {
-        { 0.0f , 0.0f , m_color, 0.0 , 0.0 , 0.0 }, 
-        { w    , 0.0f , m_color, x   , 0.0 , 0.0 }, 
-        { w    , h    , m_color, x   , y   , 0.0 }, 
-        
-        { 0.0f , 0.0f , m_color, 0.0 , 0.0 , 0.0 }, 
-        { w    , h    , m_color, x   , y   , 0.0 }, 
-        { 0.0f , h    , m_color, 0.0 , y   , 0.0 },         
-    }; 
-
-    GraphicDevice *p_device = GraphicManager::Instance().get_device();
-    p_device->set_transform_matrix(m_transform.get_matrix());
-
-    p_device->set_texture(tex);
-    p_device->set_vertex_array(VERTEX_TYPE_T2F_C4UB_V3F, vertices);
-    p_device->draw_vertex_array(DRAW_MODE_TRIANGLES, 6);
 }
 
 // 色の設定

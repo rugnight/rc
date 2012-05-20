@@ -22,14 +22,11 @@ class SpriteFont : public Sprite
 		virtual ~SpriteFont();
 
 		void create(const char* string, const char* font_name, u32 font_size);
-		void destroy();
 
 	private:
 		std::string m_text;
 		std::string m_font_neme;
 		u32			m_font_size;
-
-		TextureManager *m_p_tex_man;
 };
 
 } //rc 

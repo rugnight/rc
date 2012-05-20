@@ -6,11 +6,6 @@
 
 #include "sprite_font.h"
 
-namespace {
-	// 特に指定がなければこのマネージャを使う
-	static rc::game::TextureManager default_texture_man;
-};
-
 namespace rc {
 namespace game {
 
@@ -18,27 +13,17 @@ namespace game {
 //	class SpriteFont : public SpriteBase
 /* -------------------------------------------------- */
 SpriteFont::SpriteFont()
-	: m_p_tex_man(&default_texture_man)
-	, m_font_size(0)
+	: m_font_size(0)
 {
 }
 
 SpriteFont::~SpriteFont()
 {
-	destroy();
-}
-
-void SpriteFont::destroy()
-{
-	if ( Sprite::get_texture() ) {
-		m_p_tex_man->release( Sprite::get_texture() );
-		Sprite::set_texture(NULL);
-	}
 }
 
 void SpriteFont::create(const char* string, const char* font_name, u32 font_size)
 {
-	destroy();
+	Sprite::release_texture();
 	Sprite::set_texture( m_p_tex_man->create(string, font_name, font_size) );
 }
 

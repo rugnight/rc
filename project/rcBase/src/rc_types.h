@@ -18,4 +18,23 @@ typedef unsigned int   u32;
 typedef float          f32;
 typedef double         f64;
 
+
+/* -------------------------------------------------- */
+//  入力関連
+/* -------------------------------------------------- */
+typedef enum input_state {
+    RELEASE,
+    RELEASE_EDGE,
+    PUSH_EDGE,
+    PUSH,
+} INPUT_STATE;
+
+/* -------------------------------------------------- */
+//  型情報
+/* -------------------------------------------------- */
+typedef struct rect {
+    s32 x, y;
+    u32 w, h;
+} RECT;
+
 #endif

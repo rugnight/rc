@@ -120,8 +120,8 @@ void TaskSprite::update()
             const float x = p_sprite->get_wh().x;//p_tex->get_desc().width;
             const float y = p_sprite->get_wh().y;//p_tex->get_desc().height;
 
-            const float w = x * p_sprite->get_uv().x;//p_tex->get_desc().width;
-            const float h = y * p_sprite->get_uv().y;//p_tex->get_desc().height;
+            const float w = 1.0f;//x * p_sprite->get_uv().x;//p_tex->get_desc().width;
+            const float h = 1.0f;//y * p_sprite->get_uv().y;//p_tex->get_desc().height;
 
             const u32 color = p_sprite->get_color();
             

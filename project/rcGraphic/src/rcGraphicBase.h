@@ -7,7 +7,7 @@
 #ifndef _RC_GRAPHIC_BASE_H_
 #define _RC_GRAPHIC_BASE_H_
 
-#include "rc_base.h"
+#include "rcBase.h"
 #include "rcMath.h"
 
 // --------------------------
@@ -45,14 +45,6 @@
 #import <UIKit/UIKit.h>
 //#import <GLKit/GLKit.h>
 #endif //RC_USE_IOS
-
-// --------------------------
-// SDL
-// --------------------------
-#ifdef RC_USE_SDL
-#include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
-#endif//RC_USE_SDL
 
 // --------------------------
 // rc types

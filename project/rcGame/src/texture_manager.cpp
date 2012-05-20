@@ -25,11 +25,11 @@ TextureManager::~TextureManager()
 
 void TextureManager::destroy()
 {
-#if 0
+#if 1
 	TEX_MAP_IT it = m_map.begin();
 	while ( it != m_map.end() ) {
 		SAFE_DELETE( (*it).second.p_tex );
-		m_map.erace(it);
+		m_map.erase(it);
 	}
 #endif
 }

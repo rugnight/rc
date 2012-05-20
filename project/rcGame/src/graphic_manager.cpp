@@ -31,7 +31,7 @@ void GraphicManager::init(GraphicDevice* p_device)
 
 void GraphicManager::term()
 {
-	SAFE_DELETE(m_p_device);
+	//SAFE_DELETE(m_p_device);
 }
 
 GraphicDevice* GraphicManager::get_device()

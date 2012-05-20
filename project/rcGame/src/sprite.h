@@ -23,10 +23,8 @@ class Sprite
 
 		// テクスチャ設定
 		void set_texture(Texture *p_tex);
+		void release_texture();
 		Texture* get_texture() { return m_p_tex; }
-
-		// 描画
-		void draw();
 
 		// 姿勢情報
 		void set_pos(f32 x, f32 y)           { get_transform().set_pos(x, y, 0.0f); }
@@ -61,6 +59,9 @@ class Sprite
 
 		bool		m_is_centering;
         Vector3     m_center;
+
+	protected:
+		TextureManager *m_p_tex_man;
 };
 
 } //rc 

@@ -4,13 +4,22 @@
  *  author  Azuma_Yoshitaka
  */
 
-#ifndef _RC_BASE_H_
-#define _RC_BASE_H_
+#ifndef _RC_BASE_BASE_H_
+#define _RC_BASE_BASE_H_
 
 // --------------------------
 // ビルド環境の選択
 // --------------------------
 #define RC_USE_XCODE_COCOA_FRAMEWORK
+#define RC_USE_SDL
+
+#ifdef RC_USE_XCODE_COCOA_FRAMEWORK
+#endif//RC_USE_XCODE_COCOA_FRAMEWORK
+
+#ifdef RC_USE_SDL
+#include <SDL/SDL.h>
+#include <SDL_image/SDL_image.h>
+#endif//RC_USE_SDL
 
 #include <assert.h>
 
@@ -21,6 +30,7 @@
 // --------------------------
 // 型の定義
 #include "rc_types.h"
+#include "keyboard_type.h"
 
 // --------------------------
 // 基本機能マクロ
@@ -33,10 +43,7 @@
 
 
 
-#ifdef RC_USE_XCODE_COCOA_FRAMEWORK
-//#include <Cocoa/Cocoa.h>
-#endif//RC_USE_XCODE_COCOA_FRAMEWORK
 
 
 
-#endif//_RC_BASE_H_INCLUDED_
+#endif//_RC_BASE_BASE_H_INCLUDED_

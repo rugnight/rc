@@ -23,10 +23,6 @@ class SpriteImage : public Sprite
 
 		// ファイルパスから作成
 		void create(const char *file_path);
-		void destroy();
-
-	private:
-		TextureManager *m_p_tex_man;
 };
 
 } //rc 
